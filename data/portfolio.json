@@ -9,6 +9,17 @@
     "location": "Lebanon, NH",
     "avatar": ""
   },
+  "education": [
+    {
+      "id": 1,
+      "degree": "Bachelor of Science",
+      "major": "Robotics Engineering",
+      "school": "Worcester Polytechnic Institute (WPI)",
+      "location": "Worcester, MA",
+      "graduationYear": "2025",
+      "notes": ""
+    }
+  ],
   "skills": [
     { "id": 1, "category": "CAD & Design", "items": ["SolidWorks", "KiCad", "3D Printing"] },
     { "id": 2, "category": "Programming", "items": ["Python", "C++", "MATLAB", "Arduino", "ROS2", "Linux", "GitHub"] },

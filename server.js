@@ -94,7 +94,7 @@ app.put('/api/portfolio', requireAuth, (req, res) => {
 });
 
 // Section-level update helpers
-const SECTIONS = ['profile', 'skills', 'certifications', 'experience', 'projects'];
+const SECTIONS = ['profile', 'skills', 'certifications', 'education', 'experience', 'projects'];
 
 SECTIONS.forEach(section => {
   app.put(`/api/portfolio/${section}`, requireAuth, (req, res) => {

@@ -6,6 +6,7 @@ async function loadPortfolio() {
   renderHero(data.profile || {});
   renderSkills(data.skills || []);
   renderCerts(data.certifications || []);
+  renderEducation(data.education || []);
   renderExperience(data.experience || []);
   renderProjects(data.projects || []);
   renderContact(data.profile || {});
@@ -76,6 +77,25 @@ function renderCerts(certs) {
         <p class="cert-issuer">${esc(c.issuer)}</p>
         <p class="cert-date">📅 ${esc(c.date)}${c.credentialId ? ` · ID: ${esc(c.credentialId)}` : ''}</p>
         ${c.url ? `<a href="${c.url}" target="_blank" style="font-size:0.75rem;margin-top:0.4rem;display:inline-block;">View Credential →</a>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderEducation(schools) {
+  const list = document.getElementById('education-list');
+  if (!schools.length) {
+    list.innerHTML = '<p style="color:var(--text-dim)">No education added yet.</p>';
+    return;
+  }
+  list.innerHTML = schools.map(s => `
+    <div class="cert-card" style="margin-bottom:1rem;">
+      <div class="cert-icon">🎓</div>
+      <div class="cert-info">
+        <p class="cert-name">${esc(s.degree)}${s.major ? ` in ${esc(s.major)}` : ''}</p>
+        <p class="cert-issuer">${esc(s.school)}</p>
+        <p class="cert-date">📅 ${esc(s.graduationYear || '')}${s.location ? ` · ${esc(s.location)}` : ''}</p>
+        ${s.notes ? `<p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.4rem;">${esc(s.notes)}</p>` : ''}
       </div>
     </div>
   `).join('');
