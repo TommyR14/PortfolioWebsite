@@ -167,18 +167,21 @@ function applyFilter(projects, filter) {
     return;
   }
 
-  grid.innerHTML = filtered.map(p => {
-    const imgHtml = (p.images && p.images.length)
-      ? `<img class="project-img" src="${p.images[0]}" alt="${esc(p.title)}" loading="lazy" />`
-      : `<div class="project-img-placeholder">🔧</div>`;
+  const featured = filtered.filter(p => p.featured);
+  const regular  = filtered.filter(p => !p.featured);
 
+  const featuredHtml = featured.map(p => {
+    const hasImg = p.images && p.images.length;
+    const imgHtml = hasImg
+      ? `<img class="project-cinematic-img" src="${p.images[0]}" alt="${esc(p.title)}" loading="lazy" />`
+      : `<div class="project-cinematic-placeholder"><span class="placeholder-icon">📐</span><span class="placeholder-label">${esc(p.category || 'Project')}</span></div>`;
     return `
-      <div class="project-card${p.featured ? ' featured' : ''}">
-        ${imgHtml}
-        <div class="project-body">
+      <div class="project-featured-card">
+        <div class="project-featured-media">${imgHtml}</div>
+        <div class="project-featured-body">
           <p class="project-category">${esc(p.category || '')}</p>
-          <h3 class="project-title">${esc(p.title)}</h3>
-          <p class="project-desc">${esc(p.description || '')}</p>
+          <h3 class="project-featured-title">${esc(p.title)}</h3>
+          <p class="project-featured-desc">${esc(p.description || '')}</p>
           ${(p.tools && p.tools.length) ? `
             <div class="project-tools">
               ${p.tools.map(t => `<span class="project-tool">${esc(t)}</span>`).join('')}
@@ -188,6 +191,34 @@ function applyFilter(projects, filter) {
       </div>
     `;
   }).join('');
+
+  const regularHtml = regular.length ? `
+    <div class="projects-regular-grid">
+      ${regular.map(p => {
+        const hasImg = p.images && p.images.length;
+        const imgHtml = hasImg
+          ? `<img class="project-img" src="${p.images[0]}" alt="${esc(p.title)}" loading="lazy" />`
+          : `<div class="project-img-placeholder"><span class="placeholder-icon-sm">🔧</span><span class="placeholder-label-sm">${esc(p.category || 'Project')}</span></div>`;
+        return `
+          <div class="project-card">
+            ${imgHtml}
+            <div class="project-body">
+              <p class="project-category">${esc(p.category || '')}</p>
+              <h3 class="project-title">${esc(p.title)}</h3>
+              <p class="project-desc">${esc(p.description || '')}</p>
+              ${(p.tools && p.tools.length) ? `
+                <div class="project-tools">
+                  ${p.tools.map(t => `<span class="project-tool">${esc(t)}</span>`).join('')}
+                </div>` : ''}
+              ${p.link ? `<a href="${p.link}" target="_blank" class="project-link">View Project →</a>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  ` : '';
+
+  grid.innerHTML = featuredHtml + regularHtml;
 }
 
 function renderContact(p) {
@@ -265,7 +296,13 @@ function addRevealAttributes() {
     el.setAttribute('data-delay', Math.min(i + 1, 6));
   });
 
-  // Project cards — staggered scale
+  // Featured project cards
+  document.querySelectorAll('.project-featured-card').forEach((el, i) => {
+    el.setAttribute('data-reveal', '');
+    el.setAttribute('data-delay', Math.min(i + 1, 3));
+  });
+
+  // Regular project cards — staggered scale
   document.querySelectorAll('.project-card').forEach((el, i) => {
     el.setAttribute('data-reveal', 'scale');
     el.setAttribute('data-delay', Math.min(i + 1, 6));
