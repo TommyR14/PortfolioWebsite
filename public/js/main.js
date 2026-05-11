@@ -4,6 +4,7 @@ async function loadPortfolio() {
   const res = await fetch('/api/portfolio');
   const data = await res.json();
   renderHero(data.profile || {});
+  renderShowcase(data.projects || []);
   renderSkills(data.skills || []);
   renderCerts(data.certifications || []);
   renderEducation(data.education || []);
@@ -12,6 +13,38 @@ async function loadPortfolio() {
   renderContact(data.profile || {});
   checkAuth();
   addRevealAttributes();
+}
+
+// ===== PARALLAX SHOWCASE =====
+function renderShowcase(projects) {
+  const wrap = document.getElementById('parallax-showcase');
+  // Use projects that have images, prefer featured first
+  const withImages = [
+    ...projects.filter(p => p.featured && p.images && p.images.length),
+    ...projects.filter(p => !p.featured && p.images && p.images.length),
+  ];
+
+  if (!withImages.length) { wrap.style.display = 'none'; return; }
+
+  wrap.innerHTML = withImages.map((p, i) => {
+    const toolsHtml = (p.tools || []).map(t =>
+      `<span class="parallax-tool">${esc(t)}</span>`
+    ).join('');
+
+    return `
+      <div class="parallax-panel" data-index="${i}">
+        <div class="parallax-bg" style="background-image: url('${p.images[0]}')"></div>
+        <div class="parallax-content">
+          <p class="parallax-counter">${String(i + 1).padStart(2, '0')} / ${String(withImages.length).padStart(2, '0')} &nbsp;·&nbsp; ${esc(p.category || '')}</p>
+          <h2 class="parallax-title">${esc(p.title)}</h2>
+          ${p.description ? `<p class="parallax-desc">${esc(p.description)}</p>` : ''}
+          ${toolsHtml ? `<div class="parallax-tools">${toolsHtml}</div>` : ''}
+          ${p.link ? `<a href="${p.link}" target="_blank" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.3);">View Project →</a>` : ''}
+        </div>
+        ${i === 0 ? `<div class="scroll-hint"><div class="scroll-hint-line"></div><span>Scroll</span></div>` : ''}
+      </div>
+    `;
+  }).join('');
 }
 
 function renderHero(p) {
@@ -350,6 +383,32 @@ function initNav() {
   onScroll();
 }
 
+// ===== PARALLAX SCROLL =====
+function initParallax() {
+  const panels = document.querySelectorAll('.parallax-panel');
+  if (!panels.length) return;
+
+  let ticking = false;
+  const update = () => {
+    panels.forEach(panel => {
+      const rect = panel.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // How far through the panel are we? (-1 = above, 0 = center, 1 = below)
+      const progress = (vh / 2 - rect.top - rect.height / 2) / vh;
+      // Shift the background layer by up to ±12% for a smooth parallax
+      const shift = progress * 24;
+      const bg = panel.querySelector('.parallax-bg');
+      if (bg) bg.style.transform = `translateY(${shift}%)`;
+    });
+    ticking = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  update();
+}
+
 // ===== MAGNETIC BUTTONS =====
 function initMagneticButtons() {
   document.querySelectorAll('.btn-primary').forEach(btn => {
@@ -368,5 +427,6 @@ function initMagneticButtons() {
 loadPortfolio().then(() => {
   initScrollReveal();
   initNav();
+  initParallax();
   initMagneticButtons();
 });
