@@ -172,8 +172,15 @@ function applyFilter(projects, filter) {
 
   const featuredHtml = featured.map(p => {
     const hasImg = p.images && p.images.length;
+    const extraThumbs = hasImg && p.images.length > 1
+      ? `<div class="project-cinematic-thumbs">
+          ${p.images.slice(1).map((src, i) => `
+            <img src="${src}" class="project-cinematic-thumb" alt="${esc(p.title)} view ${i + 2}"
+              onclick="this.closest('.project-featured-media').querySelector('.project-cinematic-img').src='${src}'" />
+          `).join('')}
+        </div>` : '';
     const imgHtml = hasImg
-      ? `<img class="project-cinematic-img" src="${p.images[0]}" alt="${esc(p.title)}" loading="lazy" />`
+      ? `<img class="project-cinematic-img" src="${p.images[0]}" alt="${esc(p.title)}" loading="lazy" />${extraThumbs}`
       : `<div class="project-cinematic-placeholder"><span class="placeholder-icon">📐</span><span class="placeholder-label">${esc(p.category || 'Project')}</span></div>`;
     return `
       <div class="project-featured-card">
