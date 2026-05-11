@@ -11,6 +11,7 @@ async function loadPortfolio() {
   renderProjects(data.projects || []);
   renderContact(data.profile || {});
   checkAuth();
+  addRevealAttributes();
 }
 
 function renderHero(p) {
@@ -239,4 +240,89 @@ function esc(str) {
     .replace(/'/g, '&#39;');
 }
 
-loadPortfolio();
+// ===== ADD REVEAL ATTRIBUTES AFTER RENDER =====
+function addRevealAttributes() {
+  // Section labels and titles
+  document.querySelectorAll('.section-label, .section-title').forEach(el => {
+    el.setAttribute('data-reveal', '');
+  });
+
+  // Skill cards — staggered
+  document.querySelectorAll('.skill-card').forEach((el, i) => {
+    el.setAttribute('data-reveal', 'scale');
+    el.setAttribute('data-delay', Math.min(i + 1, 6));
+  });
+
+  // Cert cards — staggered
+  document.querySelectorAll('.cert-card').forEach((el, i) => {
+    el.setAttribute('data-reveal', '');
+    el.setAttribute('data-delay', Math.min(i + 1, 6));
+  });
+
+  // Timeline items — slide from left
+  document.querySelectorAll('.timeline-item').forEach((el, i) => {
+    el.setAttribute('data-reveal', 'left');
+    el.setAttribute('data-delay', Math.min(i + 1, 6));
+  });
+
+  // Project cards — staggered scale
+  document.querySelectorAll('.project-card').forEach((el, i) => {
+    el.setAttribute('data-reveal', 'scale');
+    el.setAttribute('data-delay', Math.min(i + 1, 6));
+  });
+
+  // Contact items
+  document.querySelectorAll('.contact-item').forEach((el, i) => {
+    el.setAttribute('data-reveal', '');
+    el.setAttribute('data-delay', Math.min(i + 1, 6));
+  });
+}
+
+// ===== SCROLL REVEAL =====
+function initScrollReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+}
+
+// ===== NAV SCROLL EFFECT =====
+function initNav() {
+  const nav = document.querySelector('nav');
+  const onScroll = () => {
+    const scrolled = window.scrollY > 40;
+    nav.classList.toggle('scrolled', scrolled);
+    const total = document.body.scrollHeight - window.innerHeight;
+    const pct = total > 0 ? (window.scrollY / total * 100).toFixed(1) : 0;
+    nav.style.setProperty('--scroll-progress', `${pct}%`);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
+
+// ===== MAGNETIC BUTTONS =====
+function initMagneticButtons() {
+  document.querySelectorAll('.btn-primary').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+}
+
+loadPortfolio().then(() => {
+  initScrollReveal();
+  initNav();
+  initMagneticButtons();
+});
