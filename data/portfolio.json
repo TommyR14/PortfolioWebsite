@@ -10,16 +10,17 @@
     "avatar": ""
   },
   "skills": [
-    { "id": 1, "category": "CAD & Design", "items": ["SolidWorks", "AutoCAD", "Fusion 360", "CATIA"] },
-    { "id": 2, "category": "Engineering", "items": ["FEA Analysis", "GD&T", "Technical Drawing", "DFM/DFA"] },
-    { "id": 3, "category": "Software", "items": ["Microsoft Office", "MATLAB", "Python", "PDM/PLM"] }
+    { "id": 1, "category": "CAD & Design", "items": ["SolidWorks", "KiCad", "3D Printing"] },
+    { "id": 2, "category": "Programming", "items": ["Python", "C++", "MATLAB", "Arduino", "ROS2", "Linux", "GitHub"] },
+    { "id": 3, "category": "Electronics & Hardware", "items": ["Circuit Design", "Soldering", "Oscilloscope", "Multimeter", "Power Supply", "PLC Programming"] },
+    { "id": 4, "category": "Simulation & Tools", "items": ["Gazebo", "VS Code"] }
   ],
   "certifications": [
     {
       "id": 1,
       "name": "Certified SolidWorks Associate (CSWA)",
       "issuer": "Dassault Systèmes",
-      "date": "2023",
+      "date": "",
       "credentialId": "",
       "url": ""
     }
@@ -27,33 +28,57 @@
   "experience": [
     {
       "id": 1,
-      "company": "Example Company",
-      "role": "Mechanical Designer",
-      "startDate": "2022-01",
+      "company": "HeadVantage",
+      "role": "Field Engineer / MQP Lead",
+      "startDate": "2025-10",
       "endDate": "",
       "current": true,
-      "location": "City, State",
-      "description": "Designed and developed mechanical components using SolidWorks. Collaborated with cross-functional teams to deliver projects on time and within spec.",
-      "highlights": ["Led design of XYZ assembly reducing weight by 15%", "Maintained CAD library of 500+ parts"]
+      "location": "Lebanon, NH",
+      "description": "Leading the Major Qualifying Project (MQP) at WPI in partnership with HeadVantage, focused on developing a concussion detection helmet system for contact sports.",
+      "highlights": [
+        "Designing and prototyping sensor-integrated helmet hardware",
+        "Collaborating with industry partner to bring research toward a market-ready product"
+      ]
+    },
+    {
+      "id": 2,
+      "company": "Worcester Polytechnic Institute",
+      "role": "Interactive Qualifying Project (IQP)",
+      "startDate": "",
+      "endDate": "",
+      "current": false,
+      "location": "Worcester, MA",
+      "description": "Completed WPI's Interactive Qualifying Project, a research-driven project at the intersection of technology and society.",
+      "highlights": []
     }
   ],
   "projects": [
     {
       "id": 1,
-      "title": "Custom Bracket Assembly",
-      "category": "CAD Design",
-      "description": "Designed a custom aluminum bracket assembly for an industrial conveyor system. Modeled in SolidWorks with full drawing package and BOM.",
-      "tools": ["SolidWorks", "AutoCAD"],
+      "title": "Concussion Detection Helmet",
+      "category": "Hardware & Sensing",
+      "description": "Designed and developed a sensor-integrated helmet system for detecting concussions in real time during contact sports. MQP project in partnership with HeadVantage.",
+      "tools": ["SolidWorks", "Circuit Design", "KiCad", "Soldering", "3D Printing"],
       "images": [],
       "featured": true,
       "link": ""
     },
     {
       "id": 2,
-      "title": "3D Printed Enclosure",
-      "category": "Rapid Prototyping",
-      "description": "Designed and iterated an electronic enclosure for rapid prototyping. Multiple design revisions tested for fitment and thermal performance.",
-      "tools": ["Fusion 360", "3D Printing"],
+      "title": "Autonomous Fruit-Picking Robot",
+      "category": "Robotics",
+      "description": "Built an autonomous robot capable of identifying and harvesting fruit using computer vision and a custom end-effector. Designed mechanical systems and programmed motion planning.",
+      "tools": ["ROS2", "Python", "Gazebo", "3D Printing", "SolidWorks"],
+      "images": [],
+      "featured": true,
+      "link": ""
+    },
+    {
+      "id": 3,
+      "title": "Navigating Robot",
+      "category": "Robotics",
+      "description": "Developed an autonomous navigating robot capable of mapping and traversing an environment. Implemented sensor fusion and path planning algorithms.",
+      "tools": ["ROS2", "Python", "C++", "Linux", "Gazebo"],
       "images": [],
       "featured": false,
       "link": ""
