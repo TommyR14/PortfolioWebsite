@@ -13,8 +13,20 @@ const DEFAULT_PASSWORD_HASH = bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'por
 
 let adminPasswordHash = DEFAULT_PASSWORD_HASH;
 
-const DATA_FILE = path.join(__dirname, 'data', 'portfolio.json');
-const UPLOADS_DIR = path.join(__dirname, 'public', 'uploads');
+// On Fly.io, DATA_DIR points to a persistent volume; locally falls back to ./data
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
+const DATA_FILE = path.join(DATA_DIR, 'portfolio.json');
+const UPLOADS_DIR = process.env.UPLOADS_DIR || path.join(__dirname, 'public', 'uploads');
+
+// Ensure directories exist (important on first volume mount)
+fs.mkdirSync(DATA_DIR, { recursive: true });
+fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+
+// Seed portfolio.json on first deploy if volume is empty
+if (!fs.existsSync(DATA_FILE)) {
+  const seed = path.join(__dirname, 'data', 'portfolio.json');
+  if (fs.existsSync(seed)) fs.copyFileSync(seed, DATA_FILE);
+}
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, UPLOADS_DIR),

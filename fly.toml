@@ -1,0 +1,25 @@
+# fly.toml — update "app" to your chosen app name after running fly launch
+app = "tommy-portfolio"
+primary_region = "bos"
+
+[build]
+
+[env]
+  PORT = "3000"
+  DATA_DIR = "/data"
+  UPLOADS_DIR = "/data/uploads"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1
+
+[[mounts]]
+  source = "portfolio_data"
+  destination = "/data"
