@@ -1,0 +1,222 @@
+const CERT_ICONS = ['🏅', '📜', '🎖️', '✅', '🏆', '⭐'];
+
+async function loadPortfolio() {
+  const res = await fetch('/api/portfolio');
+  const data = await res.json();
+  renderHero(data.profile || {});
+  renderSkills(data.skills || []);
+  renderCerts(data.certifications || []);
+  renderExperience(data.experience || []);
+  renderProjects(data.projects || []);
+  renderContact(data.profile || {});
+  checkAuth();
+}
+
+function renderHero(p) {
+  document.title = p.name ? `${p.name} — Portfolio` : 'Portfolio';
+  const nl = document.getElementById('nav-logo');
+  if (p.name) {
+    const parts = p.name.split(' ');
+    nl.innerHTML = `${parts[0]}<span>${parts.slice(1).join(' ') || ''}</span>`;
+  }
+
+  const avatarWrap = document.getElementById('hero-avatar-wrap');
+  if (p.avatar) {
+    avatarWrap.innerHTML = `<img class="hero-avatar" src="${p.avatar}" alt="${p.name}" />`;
+  } else {
+    avatarWrap.innerHTML = `<div class="hero-avatar-placeholder">👤</div>`;
+  }
+
+  document.getElementById('hero-name').textContent = p.name || 'Your Name';
+  document.getElementById('hero-title').textContent = p.title || '';
+  document.getElementById('hero-bio').textContent = p.bio || '';
+
+  const links = document.getElementById('hero-links');
+  links.innerHTML = '';
+  if (p.email) {
+    links.innerHTML += `<a href="mailto:${p.email}" class="btn btn-primary">✉ Contact Me</a>`;
+  }
+  if (p.linkedin) {
+    links.innerHTML += `<a href="${p.linkedin}" target="_blank" class="btn btn-outline">in LinkedIn</a>`;
+  }
+  if (p.github) {
+    links.innerHTML += `<a href="${p.github}" target="_blank" class="btn btn-outline">⌥ GitHub</a>`;
+  }
+  document.getElementById('footer-text').textContent =
+    `© ${new Date().getFullYear()} ${p.name || 'Portfolio'}. All rights reserved.`;
+}
+
+function renderSkills(skills) {
+  const grid = document.getElementById('skills-grid');
+  if (!skills.length) {
+    grid.innerHTML = '<p style="color:var(--text-dim)">No skills added yet.</p>';
+    return;
+  }
+  grid.innerHTML = skills.map(s => `
+    <div class="skill-card">
+      <p class="skill-category">${esc(s.category)}</p>
+      <div class="skill-tags">
+        ${(s.items || []).map(i => `<span class="skill-tag">${esc(i)}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderCerts(certs) {
+  const grid = document.getElementById('certs-grid');
+  if (!certs.length) {
+    grid.innerHTML = '<p style="color:var(--text-dim)">No certifications added yet.</p>';
+    return;
+  }
+  grid.innerHTML = certs.map((c, i) => `
+    <div class="cert-card">
+      <div class="cert-icon">${CERT_ICONS[i % CERT_ICONS.length]}</div>
+      <div class="cert-info">
+        <p class="cert-name">${esc(c.name)}</p>
+        <p class="cert-issuer">${esc(c.issuer)}</p>
+        <p class="cert-date">📅 ${esc(c.date)}${c.credentialId ? ` · ID: ${esc(c.credentialId)}` : ''}</p>
+        ${c.url ? `<a href="${c.url}" target="_blank" style="font-size:0.75rem;margin-top:0.4rem;display:inline-block;">View Credential →</a>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderExperience(jobs) {
+  const tl = document.getElementById('experience-timeline');
+  if (!jobs.length) {
+    tl.innerHTML = '<p style="color:var(--text-dim)">No experience added yet.</p>';
+    return;
+  }
+  tl.innerHTML = jobs.map(j => {
+    const start = formatDate(j.startDate);
+    const end = j.current ? 'Present' : formatDate(j.endDate);
+    return `
+      <div class="timeline-item">
+        <div class="exp-header">
+          <div>
+            <p class="exp-role">${esc(j.role)}</p>
+            <p class="exp-company">${esc(j.company)}</p>
+            <p class="exp-location">${esc(j.location || '')}</p>
+          </div>
+          <span class="exp-dates">${start} — ${end}</span>
+        </div>
+        ${j.description ? `<p class="exp-desc">${esc(j.description)}</p>` : ''}
+        ${(j.highlights && j.highlights.length) ? `
+          <ul class="exp-highlights">
+            ${j.highlights.filter(h => h).map(h => `<li>${esc(h)}</li>`).join('')}
+          </ul>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function renderProjects(projects) {
+  const grid = document.getElementById('projects-grid');
+  const filterBar = document.getElementById('project-filters');
+
+  const categories = [...new Set(projects.map(p => p.category).filter(Boolean))];
+  const existing = Array.from(filterBar.querySelectorAll('.filter-btn[data-filter]'));
+  existing.forEach(b => { if (b.dataset.filter !== 'all') b.remove(); });
+
+  categories.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.dataset.filter = cat;
+    btn.textContent = cat;
+    filterBar.appendChild(btn);
+  });
+
+  filterBar.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilter(projects, btn.dataset.filter);
+    });
+  });
+
+  applyFilter(projects, 'all');
+}
+
+function applyFilter(projects, filter) {
+  const grid = document.getElementById('projects-grid');
+  const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+
+  if (!filtered.length) {
+    grid.innerHTML = '<p style="color:var(--text-dim)">No projects added yet.</p>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(p => {
+    const imgHtml = (p.images && p.images.length)
+      ? `<img class="project-img" src="${p.images[0]}" alt="${esc(p.title)}" loading="lazy" />`
+      : `<div class="project-img-placeholder">🔧</div>`;
+
+    return `
+      <div class="project-card${p.featured ? ' featured' : ''}">
+        ${imgHtml}
+        <div class="project-body">
+          <p class="project-category">${esc(p.category || '')}</p>
+          <h3 class="project-title">${esc(p.title)}</h3>
+          <p class="project-desc">${esc(p.description || '')}</p>
+          ${(p.tools && p.tools.length) ? `
+            <div class="project-tools">
+              ${p.tools.map(t => `<span class="project-tool">${esc(t)}</span>`).join('')}
+            </div>` : ''}
+          ${p.link ? `<a href="${p.link}" target="_blank" class="project-link">View Project →</a>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderContact(p) {
+  const grid = document.getElementById('contact-grid');
+  const items = [];
+  if (p.email) items.push({ icon: '✉️', label: 'Email', value: p.email, href: `mailto:${p.email}` });
+  if (p.location) items.push({ icon: '📍', label: 'Location', value: p.location });
+  if (p.linkedin) items.push({ icon: '💼', label: 'LinkedIn', value: 'Connect', href: p.linkedin });
+  if (p.github) items.push({ icon: '⌥', label: 'GitHub', value: 'Follow', href: p.github });
+
+  if (!items.length) {
+    grid.innerHTML = '<p style="color:var(--text-dim)">No contact info added yet.</p>';
+    return;
+  }
+  grid.innerHTML = items.map(item => `
+    <${item.href ? `a href="${item.href}" target="_blank"` : 'div'} class="contact-item" style="color:inherit;opacity:1;">
+      <span class="contact-icon">${item.icon}</span>
+      <div>
+        <p class="contact-label">${item.label}</p>
+        <p class="contact-value">${esc(item.value)}</p>
+      </div>
+    </${item.href ? 'a' : 'div'}>
+  `).join('');
+}
+
+async function checkAuth() {
+  const res = await fetch('/api/auth-status');
+  const { authenticated } = await res.json();
+  const link = document.getElementById('admin-link');
+  if (authenticated) {
+    link.textContent = 'Admin Panel';
+    link.href = '/admin';
+  }
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const [year, month] = dateStr.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return month ? `${months[parseInt(month) - 1]} ${year}` : year;
+}
+
+function esc(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+loadPortfolio();

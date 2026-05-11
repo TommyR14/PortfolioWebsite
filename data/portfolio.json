@@ -1,0 +1,62 @@
+{
+  "profile": {
+    "name": "Your Name",
+    "title": "Mechanical Designer & Engineer",
+    "bio": "Passionate designer and engineer with experience in CAD modeling, technical design, and project management. I build precise, functional solutions from concept to completion.",
+    "email": "you@example.com",
+    "linkedin": "",
+    "github": "",
+    "location": "Your City, State",
+    "avatar": ""
+  },
+  "skills": [
+    { "id": 1, "category": "CAD & Design", "items": ["SolidWorks", "AutoCAD", "Fusion 360", "CATIA"] },
+    { "id": 2, "category": "Engineering", "items": ["FEA Analysis", "GD&T", "Technical Drawing", "DFM/DFA"] },
+    { "id": 3, "category": "Software", "items": ["Microsoft Office", "MATLAB", "Python", "PDM/PLM"] }
+  ],
+  "certifications": [
+    {
+      "id": 1,
+      "name": "Certified SolidWorks Associate (CSWA)",
+      "issuer": "Dassault Systèmes",
+      "date": "2023",
+      "credentialId": "",
+      "url": ""
+    }
+  ],
+  "experience": [
+    {
+      "id": 1,
+      "company": "Example Company",
+      "role": "Mechanical Designer",
+      "startDate": "2022-01",
+      "endDate": "",
+      "current": true,
+      "location": "City, State",
+      "description": "Designed and developed mechanical components using SolidWorks. Collaborated with cross-functional teams to deliver projects on time and within spec.",
+      "highlights": ["Led design of XYZ assembly reducing weight by 15%", "Maintained CAD library of 500+ parts"]
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "title": "Custom Bracket Assembly",
+      "category": "CAD Design",
+      "description": "Designed a custom aluminum bracket assembly for an industrial conveyor system. Modeled in SolidWorks with full drawing package and BOM.",
+      "tools": ["SolidWorks", "AutoCAD"],
+      "images": [],
+      "featured": true,
+      "link": ""
+    },
+    {
+      "id": 2,
+      "title": "3D Printed Enclosure",
+      "category": "Rapid Prototyping",
+      "description": "Designed and iterated an electronic enclosure for rapid prototyping. Multiple design revisions tested for fitment and thermal performance.",
+      "tools": ["Fusion 360", "3D Printing"],
+      "images": [],
+      "featured": false,
+      "link": ""
+    }
+  ]
+}

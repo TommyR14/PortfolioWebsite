@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="admin-logo">
+      <h2>Port<span>folio</span></h2>
+      <p>Admin Panel</p>
+    </div>
+    <nav class="admin-nav">
+      <div class="admin-nav-item active" data-panel="profile">
+        <span class="admin-nav-icon">👤</span> Profile
+      </div>
+      <div class="admin-nav-item" data-panel="skills">
+        <span class="admin-nav-icon">⚡</span> Skills
+      </div>
+      <div class="admin-nav-item" data-panel="certifications">
+        <span class="admin-nav-icon">🏅</span> Certifications
+      </div>
+      <div class="admin-nav-item" data-panel="experience">
+        <span class="admin-nav-icon">💼</span> Experience
+      </div>
+      <div class="admin-nav-item" data-panel="projects">
+        <span class="admin-nav-icon">🔧</span> Projects
+      </div>
+      <div class="admin-nav-item" data-panel="settings">
+        <span class="admin-nav-icon">⚙️</span> Settings
+      </div>
+    </nav>
+    <div class="admin-sidebar-footer">
+      <a href="/" target="_blank" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-bottom:0.5rem;">
+        View Portfolio ↗
+      </a>
+      <button class="btn btn-outline btn-sm" id="logout-btn" style="width:100%;justify-content:center;">
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+
+    <!-- PROFILE PANEL -->
+    <div class="admin-panel active" id="panel-profile">
+      <div class="admin-section-header">
+        <h2>Profile</h2>
+        <button class="btn btn-success btn-sm" id="save-profile">Save Changes</button>
+      </div>
+      <div class="admin-card">
+        <div class="form-group">
+          <label>Profile Photo</label>
+          <div class="upload-zone" id="avatar-zone">
+            <input type="file" id="avatar-file" accept="image/*" />
+            <div id="avatar-preview-wrap">
+              <p>🖼 Click or drag to upload photo</p>
+              <p style="font-size:0.75rem;margin-top:0.3rem;color:var(--text-dim)">PNG, JPG up to 10MB</p>
+            </div>
+          </div>
+          <input type="hidden" id="profile-avatar" />
+        </div>
+        <div class="inline-form-row">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="profile-name" placeholder="Jane Smith" />
+          </div>
+          <div class="form-group">
+            <label>Professional Title</label>
+            <input type="text" id="profile-title" placeholder="Mechanical Designer" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Bio</label>
+          <textarea id="profile-bio" rows="4" placeholder="A short description about yourself..."></textarea>
+        </div>
+        <div class="inline-form-row">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="profile-email" placeholder="you@example.com" />
+          </div>
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" id="profile-location" placeholder="City, State" />
+          </div>
+        </div>
+        <div class="inline-form-row">
+          <div class="form-group">
+            <label>LinkedIn URL</label>
+            <input type="url" id="profile-linkedin" placeholder="https://linkedin.com/in/..." />
+          </div>
+          <div class="form-group">
+            <label>GitHub URL</label>
+            <input type="url" id="profile-github" placeholder="https://github.com/..." />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKILLS PANEL -->
+    <div class="admin-panel" id="panel-skills">
+      <div class="admin-section-header">
+        <h2>Skills</h2>
+        <button class="btn btn-success btn-sm" id="add-skill-btn">+ Add Category</button>
+      </div>
+      <div id="skills-list"></div>
+    </div>
+
+    <!-- CERTIFICATIONS PANEL -->
+    <div class="admin-panel" id="panel-certifications">
+      <div class="admin-section-header">
+        <h2>Certifications</h2>
+        <button class="btn btn-success btn-sm" id="add-cert-btn">+ Add Certification</button>
+      </div>
+      <div id="certs-list"></div>
+    </div>
+
+    <!-- EXPERIENCE PANEL -->
+    <div class="admin-panel" id="panel-experience">
+      <div class="admin-section-header">
+        <h2>Experience</h2>
+        <button class="btn btn-success btn-sm" id="add-exp-btn">+ Add Position</button>
+      </div>
+      <div id="exp-list"></div>
+    </div>
+
+    <!-- PROJECTS PANEL -->
+    <div class="admin-panel" id="panel-projects">
+      <div class="admin-section-header">
+        <h2>Projects</h2>
+        <button class="btn btn-success btn-sm" id="add-project-btn">+ Add Project</button>
+      </div>
+      <div id="projects-list"></div>
+    </div>
+
+    <!-- SETTINGS PANEL -->
+    <div class="admin-panel" id="panel-settings">
+      <div class="admin-section-header">
+        <h2>Settings</h2>
+      </div>
+      <div class="admin-card">
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem;">Change Password</h3>
+        <div class="form-group">
+          <label>Current Password</label>
+          <input type="password" id="current-pw" autocomplete="current-password" />
+        </div>
+        <div class="form-group">
+          <label>New Password</label>
+          <input type="password" id="new-pw" autocomplete="new-password" />
+        </div>
+        <div class="form-group">
+          <label>Confirm New Password</label>
+          <input type="password" id="confirm-pw" autocomplete="new-password" />
+        </div>
+        <div id="pw-msg"></div>
+        <button class="btn btn-success btn-sm" id="change-pw-btn" style="margin-top:0.5rem;">Update Password</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- SKILL MODAL -->
+<div class="modal-overlay" id="skill-modal">
+  <div class="modal">
+    <h3 class="modal-title" id="skill-modal-title">Add Skill Category</h3>
+    <p class="modal-sub">Group related skills under a category.</p>
+    <input type="hidden" id="skill-edit-id" />
+    <div class="form-group modal-form">
+      <label>Category Name</label>
+      <input type="text" id="skill-cat" placeholder="e.g. CAD & Design" />
+    </div>
+    <div class="form-group modal-form">
+      <label>Skills <span style="color:var(--text-dim);font-weight:400;text-transform:none">(press Enter or comma to add)</span></label>
+      <div class="tag-input-wrapper" id="skill-tags-wrap">
+        <input type="text" class="tag-input" id="skill-tag-input" placeholder="Add a skill…" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" id="skill-modal-cancel">Cancel</button>
+      <button class="btn btn-success btn-sm" id="skill-modal-save">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- CERT MODAL -->
+<div class="modal-overlay" id="cert-modal">
+  <div class="modal">
+    <h3 class="modal-title" id="cert-modal-title">Add Certification</h3>
+    <input type="hidden" id="cert-edit-id" />
+    <div class="inline-form-row modal-form">
+      <div class="form-group">
+        <label>Certification Name</label>
+        <input type="text" id="cert-name" placeholder="e.g. CSWA" />
+      </div>
+      <div class="form-group">
+        <label>Issuing Organization</label>
+        <input type="text" id="cert-issuer" placeholder="e.g. Dassault Systèmes" />
+      </div>
+    </div>
+    <div class="inline-form-row modal-form">
+      <div class="form-group">
+        <label>Date</label>
+        <input type="text" id="cert-date" placeholder="e.g. 2023" />
+      </div>
+      <div class="form-group">
+        <label>Credential ID (optional)</label>
+        <input type="text" id="cert-credential" placeholder="ABC123" />
+      </div>
+    </div>
+    <div class="form-group modal-form">
+      <label>Credential URL (optional)</label>
+      <input type="url" id="cert-url" placeholder="https://..." />
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" id="cert-modal-cancel">Cancel</button>
+      <button class="btn btn-success btn-sm" id="cert-modal-save">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE MODAL -->
+<div class="modal-overlay" id="exp-modal">
+  <div class="modal" style="max-width:540px;">
+    <h3 class="modal-title" id="exp-modal-title">Add Position</h3>
+    <input type="hidden" id="exp-edit-id" />
+    <div class="inline-form-row modal-form">
+      <div class="form-group">
+        <label>Job Title / Role</label>
+        <input type="text" id="exp-role" placeholder="Mechanical Designer" />
+      </div>
+      <div class="form-group">
+        <label>Company</label>
+        <input type="text" id="exp-company" placeholder="Company Name" />
+      </div>
+    </div>
+    <div class="inline-form-row modal-form">
+      <div class="form-group">
+        <label>Location</label>
+        <input type="text" id="exp-location" placeholder="City, State" />
+      </div>
+      <div class="form-group">
+        <label>Start Date</label>
+        <input type="text" id="exp-start" placeholder="YYYY-MM" />
+      </div>
+    </div>
+    <div class="inline-form-row modal-form" id="exp-end-row">
+      <div class="form-group">
+        <label>End Date</label>
+        <input type="text" id="exp-end" placeholder="YYYY-MM" />
+      </div>
+      <div class="form-group" style="display:flex;align-items:flex-end;padding-bottom:0.25rem;">
+        <label style="display:flex;align-items:center;gap:0.5rem;text-transform:none;font-size:0.875rem;cursor:pointer;">
+          <input type="checkbox" id="exp-current" style="width:auto;" /> Currently working here
+        </label>
+      </div>
+    </div>
+    <div class="form-group modal-form">
+      <label>Description</label>
+      <textarea id="exp-desc" rows="3" placeholder="Brief description of your role..."></textarea>
+    </div>
+    <div class="form-group modal-form">
+      <label>Key Highlights <span style="color:var(--text-dim);font-weight:400;text-transform:none">(one per line)</span></label>
+      <textarea id="exp-highlights" rows="3" placeholder="Led redesign of assembly reducing weight by 15%&#10;Managed BOM of 300+ parts"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" id="exp-modal-cancel">Cancel</button>
+      <button class="btn btn-success btn-sm" id="exp-modal-save">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT MODAL -->
+<div class="modal-overlay" id="project-modal">
+  <div class="modal" style="max-width:560px;">
+    <h3 class="modal-title" id="project-modal-title">Add Project</h3>
+    <input type="hidden" id="project-edit-id" />
+    <div class="inline-form-row modal-form">
+      <div class="form-group">
+        <label>Project Title</label>
+        <input type="text" id="project-title" placeholder="Custom Bracket Assembly" />
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <input type="text" id="project-category" placeholder="CAD Design" />
+      </div>
+    </div>
+    <div class="form-group modal-form">
+      <label>Description</label>
+      <textarea id="project-desc" rows="3" placeholder="What did you design or build?"></textarea>
+    </div>
+    <div class="form-group modal-form">
+      <label>Tools Used <span style="color:var(--text-dim);font-weight:400;text-transform:none">(press Enter or comma to add)</span></label>
+      <div class="tag-input-wrapper" id="project-tools-wrap">
+        <input type="text" class="tag-input" id="project-tool-input" placeholder="Add a tool…" />
+      </div>
+    </div>
+    <div class="form-group modal-form">
+      <label>Project Link (optional)</label>
+      <input type="url" id="project-link" placeholder="https://..." />
+    </div>
+    <div class="form-group modal-form">
+      <label>Images</label>
+      <div class="upload-zone" id="project-img-zone">
+        <input type="file" id="project-img-file" accept="image/*" multiple />
+        <p>🖼 Click or drag to upload images</p>
+        <p style="font-size:0.75rem;margin-top:0.3rem;color:var(--text-dim)">PNG, JPG up to 10MB each</p>
+      </div>
+      <div class="image-previews" id="project-img-previews"></div>
+    </div>
+    <div class="form-group modal-form" style="display:flex;align-items:center;gap:0.5rem;">
+      <input type="checkbox" id="project-featured" style="width:auto;" />
+      <label for="project-featured" style="text-transform:none;font-size:0.875rem;cursor:pointer;margin:0;">Feature this project (spans 2 columns)</label>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" id="project-modal-cancel">Cancel</button>
+      <button class="btn btn-success btn-sm" id="project-modal-save">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div class="notification" id="notification"></div>
+
+<script src="/js/admin.js"></script>
+</body>
+</html>

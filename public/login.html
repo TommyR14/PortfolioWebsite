@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: var(--bg);
+      padding: 1rem;
+    }
+    .login-wrap {
+      width: 100%;
+      max-width: 380px;
+    }
+    .login-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-bottom: 1.5rem;
+      transition: color var(--transition);
+    }
+    .login-back:hover { color: var(--text); opacity: 1; }
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+    .login-icon {
+      width: 48px; height: 48px;
+      background: rgba(240,165,0,0.12);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .login-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+    .login-sub {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 1.75rem;
+    }
+    .login-btn {
+      width: 100%;
+      padding: 0.7rem;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      justify-content: center;
+    }
+    #login-error {
+      display: none;
+      background: rgba(248,81,73,0.1);
+      border: 1px solid rgba(248,81,73,0.3);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 0.9rem;
+      color: var(--danger);
+      font-size: 0.825rem;
+      margin-top: 0.75rem;
+    }
+    .pw-wrap { position: relative; }
+    .pw-toggle {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0;
+      line-height: 1;
+    }
+    .pw-wrap input { padding-right: 2.5rem; }
+  </style>
+</head>
+<body>
+  <div class="login-wrap">
+    <a href="/" class="login-back">← Back to Portfolio</a>
+    <div class="login-card">
+      <div class="login-icon">🔐</div>
+      <h1 class="login-title">Admin Login</h1>
+      <p class="login-sub">Enter your password to manage your portfolio.</p>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="password" name="password" placeholder="Enter your password" autofocus autocomplete="current-password" />
+            <button type="button" class="pw-toggle" id="pw-toggle" aria-label="Toggle password">👁</button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary login-btn" id="login-btn">Sign In</button>
+        <div id="login-error"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('pw-toggle').addEventListener('click', () => {
+      const input = document.getElementById('password');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    });
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('login-btn');
+      const errEl = document.getElementById('login-error');
+      const password = document.getElementById('password').value;
+
+      btn.textContent = 'Signing in…';
+      btn.disabled = true;
+      errEl.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password }),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          window.location.href = '/admin';
+        } else {
+          errEl.textContent = data.error || 'Invalid password.';
+          errEl.style.display = 'block';
+          btn.textContent = 'Sign In';
+          btn.disabled = false;
+        }
+      } catch {
+        errEl.textContent = 'Network error. Please try again.';
+        errEl.style.display = 'block';
+        btn.textContent = 'Sign In';
+        btn.disabled = false;
+      }
+    });
+
+    // Redirect if already logged in
+    fetch('/api/auth-status').then(r => r.json()).then(({ authenticated }) => {
+      if (authenticated) window.location.href = '/admin';
+    });
+  </script>
+</body>
+</html>
