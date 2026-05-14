@@ -1863,3 +1863,14 @@ body.subpage {
 .snap-contact-icon {
   font-size: 1.2rem;
 }
+
+/* ===== PREVIEW FIX ===== */
+.snap-preview {
+  display: block !important;
+  visibility: hidden;
+}
+.snap-preview.visible {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}

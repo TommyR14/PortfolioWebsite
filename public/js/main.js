@@ -528,21 +528,39 @@ function initHoverPreviews(data) {
     }
   };
 
+  let hoverTimer = null;
+
   document.querySelectorAll('.snap-nav-card[data-preview]').forEach(card => {
-    card.addEventListener('mouseenter', (e) => {
-      const key = card.dataset.preview;
-      if (!previews[key]) return;
-      inner.innerHTML = previews[key]();
-      const rect = card.getBoundingClientRect();
-      preview.style.left = rect.left + 'px';
-      preview.style.top = (rect.top - preview.offsetHeight - 12) + 'px';
-      preview.classList.add('visible');
-      // reposition after render
-      requestAnimationFrame(() => {
-        preview.style.top = (rect.top - preview.offsetHeight - 12) + 'px';
-      });
+    card.addEventListener('mouseenter', () => {
+      hoverTimer = setTimeout(() => {
+        const key = card.dataset.preview;
+        if (!previews[key]) return;
+        inner.innerHTML = previews[key]();
+
+        // Position: show to the right of the card, vertically centered
+        preview.style.opacity = '0';
+        preview.style.display = 'block';
+        const rect = card.getBoundingClientRect();
+        const ph = preview.offsetHeight;
+        const pw = preview.offsetWidth;
+        let left = rect.right + 16;
+        let top = rect.top + (rect.height / 2) - (ph / 2);
+
+        // If it goes off the right edge, show to the left instead
+        if (left + pw > window.innerWidth - 16) {
+          left = rect.left - pw - 16;
+        }
+        // Clamp vertically
+        top = Math.max(16, Math.min(top, window.innerHeight - ph - 16));
+
+        preview.style.left = left + 'px';
+        preview.style.top = top + 'px';
+        preview.classList.add('visible');
+      }, 600);
     });
+
     card.addEventListener('mouseleave', () => {
+      clearTimeout(hoverTimer);
       preview.classList.remove('visible');
     });
   });
