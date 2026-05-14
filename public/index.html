@@ -15,11 +15,13 @@
   <!-- 01 Hero -->
   <section class="snap-section snap-hero" style="--snap-bg: url('/uploads/snap1.png')">
     <div class="snap-scrim snap-scrim--bottom"></div>
-    <div class="snap-content">
+    <div class="snap-content snap-content--hero">
+      <div class="snap-avatar-wrap" id="snap-avatar-wrap">
+        <img class="snap-avatar" src="/uploads/headshot.jpg" alt="Tommy Reardon" />
+      </div>
       <p class="snap-eyebrow">Portfolio — 2026</p>
       <h1 class="snap-display" id="hero-name">Tommy Reardon</h1>
       <p class="snap-role" id="hero-title">Robotics Engineer</p>
-      <p class="snap-bio" id="hero-bio"></p>
       <div class="snap-links" id="hero-links"></div>
     </div>
     <div class="snap-scroll-hint" aria-hidden="true">
@@ -68,25 +70,26 @@
     </div>
   </section>
 
-  <!-- 05 Contact -->
+  <!-- 04 Contact -->
   <section class="snap-section snap-contact" style="--snap-bg: url('/uploads/snap2.png')">
     <div class="snap-scrim snap-scrim--bottom"></div>
     <div class="snap-content">
       <p class="snap-eyebrow">Get In Touch</p>
       <h2 class="snap-heading">Let's build<br><em>something.</em></h2>
-      <div id="hero-links-contact" class="snap-links"></div>
+      <div class="snap-contact-info">
+        <a href="mailto:tommyr1433@gmail.com" class="snap-contact-item">
+          <span class="snap-contact-icon">✉️</span>
+          <span>tommyr1433@gmail.com</span>
+        </a>
+        <a href="https://www.linkedin.com/in/thomas-reardon1433/" target="_blank" class="snap-contact-item">
+          <span class="snap-contact-icon">💼</span>
+          <span>linkedin.com/in/thomas-reardon1433</span>
+        </a>
+      </div>
     </div>
   </section>
 
 </main>
-
-<!-- DOT NAV -->
-<nav class="snap-dot-nav" aria-label="Jump to section">
-  <button class="snap-dot active" data-index="0" aria-label="Hero"></button>
-  <button class="snap-dot" data-index="1" aria-label="About"></button>
-  <button class="snap-dot" data-index="2" aria-label="Explore"></button>
-  <button class="snap-dot" data-index="3" aria-label="Contact"></button>
-</nav>
 
 <!-- HOVER PREVIEW TOOLTIP -->
 <div id="snap-preview" class="snap-preview" aria-hidden="true">
