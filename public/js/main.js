@@ -3,6 +3,7 @@ const CERT_ICONS = ['🏅', '📜', '🎖️', '✅', '🏆', '⭐'];
 async function loadPortfolio() {
   const res = await fetch('/api/portfolio');
   const data = await res.json();
+  window._portfolioData = data;
   const page = window.location.pathname;
 
   // Always render what exists on the page
@@ -19,13 +20,13 @@ async function loadPortfolio() {
   if (document.getElementById('snap-projects-list')) renderSnapProjects(data.projects || []);
   if (document.getElementById('hero-links-contact')) renderSnapContact(data.profile || {});
   if (document.querySelector('.snap-container')) initSnapNav();
-  if (document.getElementById('snap-preview')) initHoverPreviews(data);
   if (document.getElementById('footer-text')) {
     document.getElementById('footer-text').textContent =
       `© ${new Date().getFullYear()} ${data.profile.name || 'Portfolio'}. All rights reserved.`;
   }
   checkAuth();
   addRevealAttributes();
+  return data;
 }
 
 // ===== PARALLAX SHOWCASE =====
@@ -437,11 +438,12 @@ function initMagneticButtons() {
   });
 }
 
-loadPortfolio().then(() => {
+loadPortfolio().then((data) => {
   initScrollReveal();
   initNav();
   initParallax();
   initMagneticButtons();
+  if (document.querySelector('.snap-nav-card[data-preview]')) initHoverPreviews(data);
 });
 
 // ===== SNAP LANDING =====
