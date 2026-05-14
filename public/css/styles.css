@@ -1625,3 +1625,192 @@ body.has-snap {
       rgba(0,0,0,0.08) 100%);
   }
 }
+
+/* ===== SUBPAGES ===== */
+body.subpage {
+  overflow-y: auto;
+  background: var(--bg);
+}
+
+.sub-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background: rgba(13,17,23,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.sub-nav-back {
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.sub-nav-back:hover { opacity: 0.7; }
+
+.sub-nav-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.subpage-main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 3rem 2rem 6rem;
+}
+
+.subpage-header {
+  margin-bottom: 2.5rem;
+}
+
+/* ===== SNAP NAV CARDS ===== */
+.snap-nav-grid {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.snap-nav-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.2s, border-color 0.2s;
+  backdrop-filter: blur(8px);
+}
+
+.snap-nav-card:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: var(--accent);
+  color: #fff;
+  opacity: 1;
+}
+
+.snap-nav-icon { font-size: 1.2rem; }
+.snap-nav-arrow { margin-left: auto; color: var(--accent); }
+
+/* ===== SNAP BIO / ROLE ===== */
+.snap-display {
+  font-size: clamp(3rem, 9vw, 7rem);
+  font-weight: 800;
+  line-height: 0.95;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.snap-role {
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.snap-bio {
+  font-size: clamp(0.9rem, 1.3vw, 1rem);
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+  max-width: 48ch;
+  margin-bottom: 1.5rem;
+}
+
+.snap-links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.snap-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+}
+
+.snap-section-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.snap-section-link:hover {
+  border-color: var(--accent);
+  opacity: 1;
+}
+
+/* ===== HOVER PREVIEW ===== */
+.snap-preview {
+  position: fixed;
+  z-index: 300;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  max-width: 280px;
+  min-width: 220px;
+}
+
+.snap-preview.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.snap-preview-inner {
+  background: rgba(22, 27, 34, 0.96);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+.snap-preview-title {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+
+.snap-preview-item {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.4;
+}
+
+.snap-preview-item:last-child {
+  border-bottom: none;
+}
+
+.snap-preview-item strong {
+  display: block;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.82rem;
+}

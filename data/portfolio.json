@@ -2,7 +2,7 @@
   "profile": {
     "name": "Tommy Reardon",
     "title": "Robotics Engineer",
-    "bio": "I'm an engineer driven by a passion for bringing ideas to life — from early concept through to a finished, market-ready product. With a background in Robotics Engineering, I thrive in hands-on environments where I can design, build, and iterate on real physical systems.",
+    "bio": "I'm an engineer driven by a passion for bringing ideas to life \u2014 from early concept through to a finished, market-ready product. With a background in Robotics Engineering, I thrive in hands-on environments where I can design, build, and iterate on real physical systems.",
     "email": "tommyr1433@gmail.com",
     "linkedin": "https://www.linkedin.com/in/thomas-reardon1433/",
     "github": "https://github.com/TommyR14",
@@ -16,22 +16,73 @@
       "major": "Robotics Engineering",
       "school": "Worcester Polytechnic Institute (WPI)",
       "location": "Worcester, MA",
-      "graduationYear": "2025",
-      "notes": ""
+      "graduationYear": "May 2026",
+      "notes": "GPA focus on embedded systems, mechanical design, and robotics"
     }
   ],
   "skills": [
-    { "id": 1, "category": "CAD & Design", "items": ["SolidWorks", "KiCad", "3D Printing"] },
-    { "id": 2, "category": "Programming", "items": ["Python", "C++", "MATLAB", "Arduino", "ROS2", "Linux", "GitHub"] },
-    { "id": 3, "category": "Electronics & Hardware", "items": ["Circuit Design", "Soldering", "Oscilloscope", "Multimeter", "Power Supply", "PLC Programming"] },
-    { "id": 4, "category": "Simulation & Tools", "items": ["Gazebo", "VS Code"] }
+    {
+      "id": 1,
+      "category": "CAD & Design",
+      "items": [
+        "SolidWorks (CSWA)",
+        "KiCad",
+        "3D Printing"
+      ]
+    },
+    {
+      "id": 2,
+      "category": "Programming",
+      "items": [
+        "Python",
+        "C++",
+        "MATLAB",
+        "Arduino",
+        "ROS2",
+        "Linux",
+        "GitHub"
+      ]
+    },
+    {
+      "id": 3,
+      "category": "Electronics & Hardware",
+      "items": [
+        "Circuit Design",
+        "Soldering",
+        "Oscilloscope",
+        "Multimeter",
+        "Power Supply",
+        "PLC Programming",
+        "Microcontrollers (Raspberry Pi Pico W, ESP32)"
+      ]
+    },
+    {
+      "id": 4,
+      "category": "Simulation & Tools",
+      "items": [
+        "Gazebo",
+        "VS Code",
+        "SolidWorks Simulation"
+      ]
+    },
+    {
+      "id": 5,
+      "category": "Lab Techniques",
+      "items": [
+        "3D Printing",
+        "Soldering",
+        "Oscilloscope",
+        "Multimeter",
+        "Circuit Prototyping"
+      ]
+    }
   ],
   "certifications": [
     {
       "id": 1,
       "name": "Certified SolidWorks Associate (CSWA)",
-      "issuer": "Dassault Systèmes",
-      "date": "",
+      "issuer": "Dassault Syst\u00e8mes",
+      "date": "2024",
       "credentialId": "",
       "url": ""
     }
@@ -40,27 +91,31 @@
     {
       "id": 1,
       "company": "HeadVantage",
-      "role": "Field Engineer / MQP Lead",
+      "role": "Mechanical Design Engineer \u2014 MQP",
       "startDate": "2025-10",
       "endDate": "",
       "current": true,
-      "location": "Lebanon, NH",
-      "description": "Leading the Major Qualifying Project (MQP) at WPI in partnership with HeadVantage, focused on developing a concussion detection helmet system for contact sports.",
+      "location": "Worcester, MA",
+      "description": "Leading mechanical design for a startup's flagship concussion-detection helmet system as part of WPI's Major Qualifying Project.",
       "highlights": [
-        "Designing and prototyping sensor-integrated helmet hardware",
-        "Collaborating with industry partner to bring research toward a market-ready product"
+        "Designed iteratively and prototyped sensor and electronics enclosures, progressing through 9 SolidWorks iterations using 3D printing",
+        "Reconfigured helmet wiring and internal electronics to integrate cameras, sensors, and power systems in collaboration with electrical and biomedical engineering teammates",
+        "Conducted durability, stability, and usability testing on enclosures, battery systems, and sensors, validating video output and system performance"
       ]
     },
     {
       "id": 2,
       "company": "Worcester Polytechnic Institute",
-      "role": "Interactive Qualifying Project (IQP)",
-      "startDate": "",
-      "endDate": "",
+      "role": "Interactive Qualifying Project (IQP) \u2014 Venice, Italy",
+      "startDate": "2025-05",
+      "endDate": "2025-07",
       "current": false,
-      "location": "Worcester, MA",
-      "description": "Completed WPI's Interactive Qualifying Project, a research-driven project at the intersection of technology and society.",
-      "highlights": []
+      "location": "Venice, Italy",
+      "description": "Coordinated a four-person team to study pedestrian navigation patterns across different times of day in Venice.",
+      "highlights": [
+        "Analyzed movement trends to develop recommendations for street usage aimed at reducing tourist congestion",
+        "Presented research findings and recommendations to local stakeholders using clear, data-driven visual presentations"
+      ]
     }
   ],
   "projects": [
@@ -68,9 +123,19 @@
       "id": 1,
       "title": "Concussion Detection Helmet",
       "category": "Hardware & Sensing",
-      "description": "Designed and developed a sensor-integrated helmet system for detecting concussions in real time during contact sports. MQP project in partnership with HeadVantage.",
-      "tools": ["SolidWorks", "Circuit Design", "KiCad", "Soldering", "3D Printing"],
-      "images": [],
+      "description": "Designed and prototyped a sensor-integrated helmet system for detecting concussions in real time during contact sports. Sole mechanical designer on WPI MQP in partnership with startup HeadVantage. Progressed through 9 enclosure iterations and 4 head mount iterations using SolidWorks and 3D printing.",
+      "tools": [
+        "SolidWorks",
+        "3D Printing",
+        "KiCad",
+        "Circuit Design",
+        "Soldering"
+      ],
+      "images": [
+        "/uploads/snap1.png",
+        "/uploads/snap2.png",
+        "/uploads/snap3.png"
+      ],
       "featured": true,
       "link": ""
     },
@@ -78,8 +143,14 @@
       "id": 2,
       "title": "Autonomous Fruit-Picking Robot",
       "category": "Robotics",
-      "description": "Built an autonomous robot capable of identifying and harvesting fruit using computer vision and a custom end-effector. Designed mechanical systems and programmed motion planning.",
-      "tools": ["ROS2", "Python", "Gazebo", "3D Printing", "SolidWorks"],
+      "description": "Collaborated with a team of three to design and build an autonomous robot capable of navigating a simulated orchard environment, identifying colored fruit, and sorting it accordingly. Developed an omnidirectional drive system and programmed vision-based fruit detection and sorting logic.",
+      "tools": [
+        "Python",
+        "ROS2",
+        "Computer Vision",
+        "Gazebo",
+        "3D Printing"
+      ],
       "images": [],
       "featured": true,
       "link": ""
@@ -88,8 +159,44 @@
       "id": 3,
       "title": "Navigating Robot",
       "category": "Robotics",
-      "description": "Developed an autonomous navigating robot capable of mapping and traversing an environment. Implemented sensor fusion and path planning algorithms.",
-      "tools": ["ROS2", "Python", "C++", "Linux", "Gazebo"],
+      "description": "Worked with a team of three to program a robot capable of autonomously navigating a maze using multiple sensor inputs. Implemented C++ software that fused camera and LiDAR data to detect visual tags and make directional decisions in real time. Integrated gyroscope data to improve navigation accuracy.",
+      "tools": [
+        "C++",
+        "ROS2",
+        "LiDAR",
+        "Camera Vision",
+        "Linux"
+      ],
+      "images": [],
+      "featured": false,
+      "link": ""
+    },
+    {
+      "id": 4,
+      "title": "Microcontroller Programming",
+      "category": "Embedded Systems",
+      "description": "Programmed a Raspberry Pi Pico W using C/C++ in a Linux-based virtual machine, completing embedded systems projects involving GPIO control, motor actuation, sensor integration, and real-time data display. Created detailed circuit diagrams in KiCad for each project.",
+      "tools": [
+        "C++",
+        "Raspberry Pi Pico W",
+        "KiCad",
+        "Linux",
+        "GPIO"
+      ],
+      "images": [],
+      "featured": false,
+      "link": ""
+    },
+    {
+      "id": 5,
+      "title": "Streets of Venice \u2014 IQP",
+      "category": "Research",
+      "description": "Coordinated a four-person team to study pedestrian navigation patterns across different times of day in Venice, Italy. Developed data-driven recommendations for reducing tourist congestion presented to local stakeholders.",
+      "tools": [
+        "Data Analysis",
+        "Research",
+        "Presentation"
+      ],
       "images": [],
       "featured": false,
       "link": ""

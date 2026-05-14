@@ -3,25 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio</title>
+  <title>Tommy Reardon</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/styles.css" />
 </head>
 <body>
 
-<!-- SCROLL LANDING — fullscreen snap sections -->
 <main class="snap-container">
 
-  <!-- Section 1: Hero -->
+  <!-- 01 Hero -->
   <section class="snap-section snap-hero" style="--snap-bg: url('/uploads/snap1.png')">
     <div class="snap-scrim snap-scrim--bottom"></div>
     <div class="snap-content">
-      <div id="hero-avatar-wrap"></div>
-      <h1 class="hero-name" id="hero-name">Loading...</h1>
-      <p class="hero-title" id="hero-title"></p>
-      <p class="hero-bio" id="hero-bio"></p>
-      <div class="hero-links" id="hero-links"></div>
+      <p class="snap-eyebrow">Portfolio — 2026</p>
+      <h1 class="snap-display" id="hero-name">Tommy Reardon</h1>
+      <p class="snap-role" id="hero-title">Robotics Engineer</p>
+      <p class="snap-bio" id="hero-bio"></p>
+      <div class="snap-links" id="hero-links"></div>
     </div>
     <div class="snap-scroll-hint" aria-hidden="true">
       <div class="snap-scroll-hint__line"></div>
@@ -29,33 +28,53 @@
     </div>
   </section>
 
-  <!-- Section 2: About -->
+  <!-- 02 About -->
   <section class="snap-section snap-about" style="--snap-bg: url('/uploads/snap2.png')">
     <div class="snap-scrim snap-scrim--left"></div>
     <div class="snap-content">
-      <p class="snap-eyebrow">About</p>
+      <p class="snap-eyebrow">About Me</p>
       <h2 class="snap-heading">Building things<br><em>that matter.</em></h2>
-      <p class="snap-body">Robotics Engineer with a passion for hardware and software — from embedded systems to web applications. I thrive where elegant interfaces make complex systems feel simple.</p>
+      <p class="snap-body" id="about-bio"></p>
+      <div class="snap-meta">
+        <span>📍 Lebanon, NH</span>
+        <span>🎓 WPI — BS Robotics Engineering, May 2026</span>
+      </div>
     </div>
   </section>
 
-  <!-- Section 3: Work -->
+  <!-- 03 Everything -->
   <section class="snap-section snap-work" style="--snap-bg: url('/uploads/snap3.png')">
     <div class="snap-scrim snap-scrim--bottom"></div>
     <div class="snap-content">
-      <p class="snap-eyebrow">Selected Work</p>
-      <h2 class="snap-heading">Projects</h2>
-      <div id="snap-projects-list" class="snap-project-list"></div>
+      <p class="snap-eyebrow">Explore</p>
+      <h2 class="snap-heading">What I've<br><em>Built & Done</em></h2>
+      <div class="snap-nav-grid">
+        <a href="/projects.html" class="snap-nav-card" data-preview="projects">
+          <span class="snap-nav-icon">🔧</span>
+          <span class="snap-nav-label">Projects</span>
+          <span class="snap-nav-arrow">→</span>
+        </a>
+        <a href="/experience.html" class="snap-nav-card" data-preview="experience">
+          <span class="snap-nav-icon">💼</span>
+          <span class="snap-nav-label">Experience</span>
+          <span class="snap-nav-arrow">→</span>
+        </a>
+        <a href="/skills.html" class="snap-nav-card" data-preview="skills">
+          <span class="snap-nav-icon">⚙️</span>
+          <span class="snap-nav-label">Skills & Certs</span>
+          <span class="snap-nav-arrow">→</span>
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- Section 4: Contact -->
-  <section class="snap-section snap-contact" style="--snap-bg: url('/uploads/snap3.png')">
+  <!-- 05 Contact -->
+  <section class="snap-section snap-contact" style="--snap-bg: url('/uploads/snap2.png')">
     <div class="snap-scrim snap-scrim--bottom"></div>
     <div class="snap-content">
       <p class="snap-eyebrow">Get In Touch</p>
       <h2 class="snap-heading">Let's build<br><em>something.</em></h2>
-      <div id="hero-links-contact" class="hero-links"></div>
+      <div id="hero-links-contact" class="snap-links"></div>
     </div>
   </section>
 
@@ -65,71 +84,14 @@
 <nav class="snap-dot-nav" aria-label="Jump to section">
   <button class="snap-dot active" data-index="0" aria-label="Hero"></button>
   <button class="snap-dot" data-index="1" aria-label="About"></button>
-  <button class="snap-dot" data-index="2" aria-label="Work"></button>
+  <button class="snap-dot" data-index="2" aria-label="Explore"></button>
   <button class="snap-dot" data-index="3" aria-label="Contact"></button>
 </nav>
 
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="section-inner">
-    <p class="section-label">What I Know</p>
-    <h2 class="section-title">Skills</h2>
-    <div class="skills-grid" id="skills-grid"></div>
-  </div>
-</section>
-
-<!-- CERTIFICATIONS -->
-<section id="certifications" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-  <div class="section-inner">
-    <p class="section-label">Credentials</p>
-    <h2 class="section-title">Certifications</h2>
-    <div class="certs-grid" id="certs-grid"></div>
-  </div>
-</section>
-
-<!-- EDUCATION -->
-<section id="education" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-  <div class="section-inner">
-    <p class="section-label">Where I Studied</p>
-    <h2 class="section-title">Education</h2>
-    <div id="education-list"></div>
-  </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="section-inner">
-    <p class="section-label">Where I've Worked</p>
-    <h2 class="section-title">Experience</h2>
-    <div class="timeline" id="experience-timeline"></div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="section-inner">
-    <p class="section-label">What I've Built</p>
-    <h2 class="section-title">Projects</h2>
-    <div class="project-filters" id="project-filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-    </div>
-    <div class="projects-grid" id="projects-grid"></div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-inner">
-    <p class="section-label">Get In Touch</p>
-    <h2 class="section-title">Contact</h2>
-    <div class="contact-grid" id="contact-grid"></div>
-  </div>
-</section>
-
-<footer>
-  <p id="footer-text"></p>
-</footer>
+<!-- HOVER PREVIEW TOOLTIP -->
+<div id="snap-preview" class="snap-preview" aria-hidden="true">
+  <div class="snap-preview-inner" id="snap-preview-inner"></div>
+</div>
 
 <script src="/js/main.js"></script>
 </body>

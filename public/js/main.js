@@ -3,17 +3,27 @@ const CERT_ICONS = ['🏅', '📜', '🎖️', '✅', '🏆', '⭐'];
 async function loadPortfolio() {
   const res = await fetch('/api/portfolio');
   const data = await res.json();
-  renderHero(data.profile || {});
-  renderShowcase(data.projects || []);
-  renderSkills(data.skills || []);
-  renderCerts(data.certifications || []);
-  renderEducation(data.education || []);
-  renderExperience(data.experience || []);
-  renderProjects(data.projects || []);
-  renderContact(data.profile || {});
-  renderSnapProjects(data.projects || []);
-  renderSnapContact(data.profile || {});
-  initSnapNav();
+  const page = window.location.pathname;
+
+  // Always render what exists on the page
+  if (document.getElementById('hero-name')) renderHero(data.profile || {});
+  if (document.getElementById('about-bio')) {
+    document.getElementById('about-bio').textContent = data.profile.bio || '';
+  }
+  if (document.getElementById('skills-grid')) renderSkills(data.skills || []);
+  if (document.getElementById('certs-grid')) renderCerts(data.certifications || []);
+  if (document.getElementById('education-list')) renderEducation(data.education || []);
+  if (document.getElementById('experience-timeline')) renderExperience(data.experience || []);
+  if (document.getElementById('projects-grid')) renderProjects(data.projects || []);
+  if (document.getElementById('contact-grid')) renderContact(data.profile || {});
+  if (document.getElementById('snap-projects-list')) renderSnapProjects(data.projects || []);
+  if (document.getElementById('hero-links-contact')) renderSnapContact(data.profile || {});
+  if (document.querySelector('.snap-container')) initSnapNav();
+  if (document.getElementById('snap-preview')) initHoverPreviews(data);
+  if (document.getElementById('footer-text')) {
+    document.getElementById('footer-text').textContent =
+      `© ${new Date().getFullYear()} ${data.profile.name || 'Portfolio'}. All rights reserved.`;
+  }
   checkAuth();
   addRevealAttributes();
 }
@@ -487,4 +497,53 @@ function initSnapNav() {
   }, { root: container, threshold: 0.5 });
 
   sections.forEach(s => obs.observe(s));
+}
+
+// ===== HOVER PREVIEWS =====
+function initHoverPreviews(data) {
+  const preview = document.getElementById('snap-preview');
+  const inner = document.getElementById('snap-preview-inner');
+  if (!preview || !inner) return;
+
+  const previews = {
+    projects: () => {
+      const items = (data.projects || []).slice(0, 4);
+      return `<div class="snap-preview-title">Projects</div>` +
+        items.map(p => `<div class="snap-preview-item"><strong>${esc(p.title)}</strong>${esc(p.category)}</div>`).join('');
+    },
+    experience: () => {
+      const items = (data.experience || []);
+      return `<div class="snap-preview-title">Experience</div>` +
+        items.map(e => `<div class="snap-preview-item"><strong>${esc(e.role)}</strong>${esc(e.company)}</div>`).join('') +
+        `<div class="snap-preview-title" style="margin-top:0.75rem">Education</div>` +
+        (data.education || []).map(e => `<div class="snap-preview-item"><strong>${esc(e.degree)} in ${esc(e.major)}</strong>${esc(e.school)}</div>`).join('');
+    },
+    skills: () => {
+      const certs = (data.certifications || []);
+      const skills = (data.skills || []).slice(0, 3);
+      return `<div class="snap-preview-title">Certifications</div>` +
+        certs.map(c => `<div class="snap-preview-item"><strong>${esc(c.name)}</strong>${esc(c.issuer)}</div>`).join('') +
+        `<div class="snap-preview-title" style="margin-top:0.75rem">Skills</div>` +
+        skills.map(s => `<div class="snap-preview-item"><strong>${esc(s.category)}</strong>${(s.items||[]).slice(0,3).join(', ')}</div>`).join('');
+    }
+  };
+
+  document.querySelectorAll('.snap-nav-card[data-preview]').forEach(card => {
+    card.addEventListener('mouseenter', (e) => {
+      const key = card.dataset.preview;
+      if (!previews[key]) return;
+      inner.innerHTML = previews[key]();
+      const rect = card.getBoundingClientRect();
+      preview.style.left = rect.left + 'px';
+      preview.style.top = (rect.top - preview.offsetHeight - 12) + 'px';
+      preview.classList.add('visible');
+      // reposition after render
+      requestAnimationFrame(() => {
+        preview.style.top = (rect.top - preview.offsetHeight - 12) + 'px';
+      });
+    });
+    card.addEventListener('mouseleave', () => {
+      preview.classList.remove('visible');
+    });
+  });
 }
