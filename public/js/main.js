@@ -501,67 +501,40 @@ function initSnapNav() {
 
 // ===== HOVER PREVIEWS =====
 function initHoverPreviews(data) {
-  const preview = document.getElementById('snap-preview');
-  const inner = document.getElementById('snap-preview-inner');
-  if (!preview || !inner) return;
-
-  const previews = {
-    projects: () => {
-      const items = (data.projects || []).slice(0, 4);
-      return `<div class="snap-preview-title">Projects</div>` +
-        items.map(p => `<div class="snap-preview-item"><strong>${esc(p.title)}</strong>${esc(p.category)}</div>`).join('');
-    },
-    experience: () => {
-      const items = (data.experience || []);
-      return `<div class="snap-preview-title">Experience</div>` +
-        items.map(e => `<div class="snap-preview-item"><strong>${esc(e.role)}</strong>${esc(e.company)}</div>`).join('') +
-        `<div class="snap-preview-title" style="margin-top:0.75rem">Education</div>` +
-        (data.education || []).map(e => `<div class="snap-preview-item"><strong>${esc(e.degree)} in ${esc(e.major)}</strong>${esc(e.school)}</div>`).join('');
-    },
-    skills: () => {
-      const certs = (data.certifications || []);
-      const skills = (data.skills || []).slice(0, 3);
-      return `<div class="snap-preview-title">Certifications</div>` +
-        certs.map(c => `<div class="snap-preview-item"><strong>${esc(c.name)}</strong>${esc(c.issuer)}</div>`).join('') +
-        `<div class="snap-preview-title" style="margin-top:0.75rem">Skills</div>` +
-        skills.map(s => `<div class="snap-preview-item"><strong>${esc(s.category)}</strong>${(s.items||[]).slice(0,3).join(', ')}</div>`).join('');
-    }
-  };
-
-  let hoverTimer = null;
-
   document.querySelectorAll('.snap-nav-card[data-preview]').forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      hoverTimer = setTimeout(() => {
-        const key = card.dataset.preview;
-        if (!previews[key]) return;
-        inner.innerHTML = previews[key]();
+    const key = card.dataset.preview;
+    let html = '';
 
-        // Position: show to the right of the card, vertically centered
-        preview.style.opacity = '0';
-        preview.style.display = 'block';
-        const rect = card.getBoundingClientRect();
-        const ph = preview.offsetHeight;
-        const pw = preview.offsetWidth;
-        let left = rect.right + 16;
-        let top = rect.top + (rect.height / 2) - (ph / 2);
+    if (key === 'projects') {
+      html = '<div class="tip-title">Projects</div>' +
+        (data.projects || []).slice(0, 4).map(p =>
+          `<div class="tip-item"><b>${esc(p.title)}</b><span>${esc(p.category)}</span></div>`
+        ).join('');
+    } else if (key === 'experience') {
+      html = '<div class="tip-title">Experience</div>' +
+        (data.experience || []).map(e =>
+          `<div class="tip-item"><b>${esc(e.role)}</b><span>${esc(e.company)}</span></div>`
+        ).join('') +
+        '<div class="tip-title" style="margin-top:0.6rem">Education</div>' +
+        (data.education || []).map(e =>
+          `<div class="tip-item"><b>${esc(e.degree)} in ${esc(e.major)}</b><span>${esc(e.school)}</span></div>`
+        ).join('');
+    } else if (key === 'skills') {
+      html = '<div class="tip-title">Certifications</div>' +
+        (data.certifications || []).map(c =>
+          `<div class="tip-item"><b>${esc(c.name)}</b><span>${esc(c.issuer)}</span></div>`
+        ).join('') +
+        '<div class="tip-title" style="margin-top:0.6rem">Skills</div>' +
+        (data.skills || []).slice(0, 4).map(s =>
+          `<div class="tip-item"><b>${esc(s.category)}</b><span>${(s.items||[]).slice(0,3).join(', ')}</span></div>`
+        ).join('');
+    }
 
-        // If it goes off the right edge, show to the left instead
-        if (left + pw > window.innerWidth - 16) {
-          left = rect.left - pw - 16;
-        }
-        // Clamp vertically
-        top = Math.max(16, Math.min(top, window.innerHeight - ph - 16));
+    if (!html) return;
 
-        preview.style.left = left + 'px';
-        preview.style.top = top + 'px';
-        preview.classList.add('visible');
-      }, 600);
-    });
-
-    card.addEventListener('mouseleave', () => {
-      clearTimeout(hoverTimer);
-      preview.classList.remove('visible');
-    });
+    const tip = document.createElement('div');
+    tip.className = 'nav-tooltip';
+    tip.innerHTML = html;
+    card.appendChild(tip);
   });
 }
