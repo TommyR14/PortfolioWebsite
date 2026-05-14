@@ -1,0 +1,98 @@
+{
+  "profile": {
+    "name": "Tommy Reardon",
+    "title": "Robotics Engineer",
+    "bio": "I'm an engineer driven by a passion for bringing ideas to life — from early concept through to a finished, market-ready product. With a background in Robotics Engineering, I thrive in hands-on environments where I can design, build, and iterate on real physical systems.",
+    "email": "tommyr1433@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/thomas-reardon1433/",
+    "github": "https://github.com/TommyR14",
+    "location": "Lebanon, NH",
+    "avatar": ""
+  },
+  "education": [
+    {
+      "id": 1,
+      "degree": "Bachelor of Science",
+      "major": "Robotics Engineering",
+      "school": "Worcester Polytechnic Institute (WPI)",
+      "location": "Worcester, MA",
+      "graduationYear": "2025",
+      "notes": ""
+    }
+  ],
+  "skills": [
+    { "id": 1, "category": "CAD & Design", "items": ["SolidWorks", "KiCad", "3D Printing"] },
+    { "id": 2, "category": "Programming", "items": ["Python", "C++", "MATLAB", "Arduino", "ROS2", "Linux", "GitHub"] },
+    { "id": 3, "category": "Electronics & Hardware", "items": ["Circuit Design", "Soldering", "Oscilloscope", "Multimeter", "Power Supply", "PLC Programming"] },
+    { "id": 4, "category": "Simulation & Tools", "items": ["Gazebo", "VS Code"] }
+  ],
+  "certifications": [
+    {
+      "id": 1,
+      "name": "Certified SolidWorks Associate (CSWA)",
+      "issuer": "Dassault Systèmes",
+      "date": "",
+      "credentialId": "",
+      "url": ""
+    }
+  ],
+  "experience": [
+    {
+      "id": 1,
+      "company": "HeadVantage",
+      "role": "Field Engineer / MQP Lead",
+      "startDate": "2025-10",
+      "endDate": "",
+      "current": true,
+      "location": "Lebanon, NH",
+      "description": "Leading the Major Qualifying Project (MQP) at WPI in partnership with HeadVantage, focused on developing a concussion detection helmet system for contact sports.",
+      "highlights": [
+        "Designing and prototyping sensor-integrated helmet hardware",
+        "Collaborating with industry partner to bring research toward a market-ready product"
+      ]
+    },
+    {
+      "id": 2,
+      "company": "Worcester Polytechnic Institute",
+      "role": "Interactive Qualifying Project (IQP)",
+      "startDate": "",
+      "endDate": "",
+      "current": false,
+      "location": "Worcester, MA",
+      "description": "Completed WPI's Interactive Qualifying Project, a research-driven project at the intersection of technology and society.",
+      "highlights": []
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "title": "Concussion Detection Helmet",
+      "category": "Hardware & Sensing",
+      "description": "Designed and developed a sensor-integrated helmet system for detecting concussions in real time during contact sports. MQP project in partnership with HeadVantage.",
+      "tools": ["SolidWorks", "Circuit Design", "KiCad", "Soldering", "3D Printing"],
+      "images": [],
+      "featured": true,
+      "link": ""
+    },
+    {
+      "id": 2,
+      "title": "Autonomous Fruit-Picking Robot",
+      "category": "Robotics",
+      "description": "Built an autonomous robot capable of identifying and harvesting fruit using computer vision and a custom end-effector. Designed mechanical systems and programmed motion planning.",
+      "tools": ["ROS2", "Python", "Gazebo", "3D Printing", "SolidWorks"],
+      "images": [],
+      "featured": true,
+      "link": ""
+    },
+    {
+      "id": 3,
+      "title": "Navigating Robot",
+      "category": "Robotics",
+      "description": "Developed an autonomous navigating robot capable of mapping and traversing an environment. Implemented sensor fusion and path planning algorithms.",
+      "tools": ["ROS2", "Python", "C++", "Linux", "Gazebo"],
+      "images": [],
+      "featured": false,
+      "link": ""
+    }
+  ]
+}
