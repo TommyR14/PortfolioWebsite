@@ -1,0 +1,383 @@
+/* ─── Reset ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Design tokens ──────────────────────────────────── */
+:root {
+  /* One accent + neutrals */
+  --accent:        #F5F0E8;               /* warm cream */
+  --accent-dim:    rgba(245, 240, 232, 0.55);
+  --text-primary:  #ffffff;
+  --text-muted:    rgba(255, 255, 255, 0.62);
+
+  /* Fluid type scale — three tiers of hierarchy */
+  --t-display:  clamp(3.25rem, 9vw, 7.5rem);   /* primary: name */
+  --t-heading:  clamp(2rem,    5.5vw, 4.25rem); /* secondary: section h2 */
+  --t-project:  clamp(1rem,    2.2vw, 1.6rem);  /* tertiary: project names */
+  --t-eyebrow:  clamp(0.6rem,  1vw,   0.72rem); /* label — intentionally small */
+  --t-body:     clamp(0.9rem,  1.4vw, 1.05rem); /* prose */
+
+  /* 8px spacing grid */
+  --s-2xs: 0.25rem;  /*  4px */
+  --s-xs:  0.5rem;   /*  8px */
+  --s-sm:  1rem;     /* 16px */
+  --s-md:  2rem;     /* 32px */
+  --s-lg:  3.5rem;   /* 56px */
+  --s-xl:  5.5rem;   /* 88px */
+}
+
+/* ─── Base ───────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #000;
+  color: var(--text-primary);
+  /* overflow hidden — all scrolling is inside .scroll-container */
+  overflow: hidden;
+}
+
+/* ─── Scroll container ───────────────────────────────── */
+.scroll-container {
+  height: 100dvh;         /* dynamic viewport height: accounts for mobile chrome */
+  height: 100vh;          /* fallback */
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+@supports (height: 100dvh) {
+  .scroll-container { height: 100dvh; }
+}
+
+/* ─── Fullscreen sections ────────────────────────────── */
+.snap-section {
+  position: relative;
+  height: 100dvh;
+  height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: flex-end;       /* content anchors to bottom by default */
+  background-image: var(--bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+@supports (height: 100dvh) {
+  .snap-section { height: 100dvh; }
+}
+
+/* ─── Scrims ─────────────────────────────────────────── */
+.scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Bottom-weighted — for hero/work/contact where text sits at foot */
+.scrim--bottom {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.38) 45%,
+    rgba(0, 0, 0, 0.08) 100%
+  );
+}
+
+/* Left-weighted — for about section where text is left-aligned mid-page */
+.scrim--left {
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.82) 0%,
+    rgba(0, 0, 0, 0.45) 50%,
+    rgba(0, 0, 0, 0.00) 100%
+  );
+}
+
+/* ─── Content regions ────────────────────────────────── */
+.section-content {
+  position: relative;
+  z-index: 1;
+  padding: var(--s-xl) var(--s-lg);
+  width: 100%;
+  max-width: 960px;
+}
+
+.content--about {
+  align-self: center;  /* vertically centered in its section */
+}
+
+/* ─── Eyebrow label ──────────────────────────────────── */
+.eyebrow {
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-dim);
+  margin-bottom: var(--s-sm);
+}
+
+/* ─── Display name (hero h1) ─────────────────────────── */
+.display-name {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: var(--t-display);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  margin-bottom: var(--s-md);
+}
+
+.role {
+  font-size: var(--t-body);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+/* ─── Section heading (h2) ───────────────────────────── */
+.section-heading {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: var(--t-heading);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+  margin-bottom: var(--s-md);
+}
+
+.section-heading em {
+  font-style: italic;
+  color: var(--text-primary);
+}
+
+/* ─── Body prose ─────────────────────────────────────── */
+.body-text {
+  font-size: var(--t-body);
+  font-weight: 300;
+  line-height: 1.72;
+  color: var(--text-muted);
+  max-width: 44ch;
+}
+
+/* ─── Project list ───────────────────────────────────── */
+.project-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: var(--s-xs);
+}
+
+.project-item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding-block: var(--s-md);
+}
+
+.project-item:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.project-number {
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--accent-dim);
+  flex-shrink: 0;
+  min-width: 1.8rem;
+}
+
+.project-title {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: var(--t-project);
+  font-weight: 400;
+  color: var(--accent);
+  margin-bottom: var(--s-2xs);
+  line-height: 1.2;
+}
+
+.project-meta {
+  font-size: var(--t-eyebrow);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ─── Contact ────────────────────────────────────────── */
+.contact-link {
+  display: inline-block;
+  font-size: var(--t-body);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-dim);
+  padding-bottom: 3px;
+  margin-bottom: var(--s-md);
+  transition: border-color 0.2s ease;
+}
+
+.contact-link:hover {
+  border-color: var(--accent);
+}
+
+.contact-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-color: transparent;
+}
+
+.social-links {
+  display: flex;
+  gap: var(--s-md);
+}
+
+.social-links a {
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.social-links a:hover {
+  color: var(--accent);
+}
+
+.social-links a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+  color: var(--accent);
+}
+
+/* ─── Scroll hint ────────────────────────────────────── */
+.scroll-hint {
+  position: absolute;
+  bottom: var(--s-lg);
+  right: var(--s-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-xs);
+  z-index: 1;
+}
+
+.scroll-hint__label {
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent-dim);
+  writing-mode: vertical-lr;
+}
+
+.scroll-hint__line {
+  width: 1px;
+  height: 3rem;
+  background: linear-gradient(to bottom, var(--accent-dim), transparent);
+  animation: hint-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.35; transform: scaleY(1)   translateY(0); }
+  50%       { opacity: 1;    transform: scaleY(0.6) translateY(6px); }
+}
+
+/* ─── Dot navigation ─────────────────────────────────── */
+.dot-nav {
+  position: fixed;
+  right: var(--s-md);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-sm);
+  z-index: 100;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.dot.active {
+  background: var(--accent);
+  transform: scale(1.6);
+}
+
+.dot:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
+}
+
+/* ─── Reduced motion ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html,
+  .scroll-container {
+    scroll-behavior: auto;
+  }
+
+  .scroll-hint__line {
+    animation: none;
+    opacity: 0.5;
+  }
+
+  .dot {
+    transition: none;
+  }
+}
+
+/* ─── Mobile ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .section-content {
+    padding: var(--s-lg) var(--s-md);
+  }
+
+  .scroll-hint {
+    display: none;
+  }
+
+  .dot-nav {
+    right: var(--s-sm);
+  }
+
+  /* On mobile, left-scrim becomes bottom-scrim for readability */
+  .scrim--left {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.85) 0%,
+      rgba(0, 0, 0, 0.45) 55%,
+      rgba(0, 0, 0, 0.08) 100%
+    );
+  }
+
+  .content--about {
+    align-self: flex-end;
+  }
+
+  .project-item {
+    flex-direction: column;
+    gap: var(--s-xs);
+  }
+}

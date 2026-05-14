@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tommy Reardon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="scroll-container" id="scroll-container">
+
+    <!-- 01 — Hero -->
+    <section class="snap-section" id="s0" style="--bg: url('https://picsum.photos/seed/portfolio1/1920/1080')">
+      <div class="scrim scrim--bottom"></div>
+      <div class="section-content content--hero">
+        <p class="eyebrow">Portfolio — 2025</p>
+        <h1 class="display-name">Tommy<br>Reardon</h1>
+        <p class="role">Software Engineer &amp; Developer</p>
+      </div>
+      <div class="scroll-hint" aria-hidden="true">
+        <span class="scroll-hint__label">Scroll</span>
+        <div class="scroll-hint__line"></div>
+      </div>
+    </section>
+
+    <!-- 02 — About -->
+    <section class="snap-section" id="s1" style="--bg: url('https://picsum.photos/seed/portfolio2/1920/1080')">
+      <div class="scrim scrim--left"></div>
+      <div class="section-content content--about">
+        <p class="eyebrow">About</p>
+        <h2 class="section-heading">Building things<br><em>that matter.</em></h2>
+        <p class="body-text">I design and engineer digital products — from embedded systems to web applications. I'm drawn to the intersection of hardware and software, where elegant interfaces make complex systems feel simple.</p>
+      </div>
+    </section>
+
+    <!-- 03 — Work -->
+    <section class="snap-section" id="s2" style="--bg: url('https://picsum.photos/seed/portfolio3/1920/1080')">
+      <div class="scrim scrim--bottom"></div>
+      <div class="section-content content--work">
+        <p class="eyebrow">Selected Work</p>
+        <ul class="project-list" role="list">
+          <li class="project-item">
+            <span class="project-number" aria-hidden="true">01</span>
+            <div>
+              <h3 class="project-title">Autonomous Navigation</h3>
+              <p class="project-meta">Robotics · ROS 2 · Python</p>
+            </div>
+          </li>
+          <li class="project-item">
+            <span class="project-number" aria-hidden="true">02</span>
+            <div>
+              <h3 class="project-title">Portfolio Website</h3>
+              <p class="project-meta">Web Design · HTML &amp; CSS</p>
+            </div>
+          </li>
+          <li class="project-item">
+            <span class="project-number" aria-hidden="true">03</span>
+            <div>
+              <h3 class="project-title">Embedded Systems</h3>
+              <p class="project-meta">Hardware · C · Arduino</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 04 — Contact -->
+    <section class="snap-section" id="s3" style="--bg: url('https://picsum.photos/seed/portfolio4/1920/1080')">
+      <div class="scrim scrim--bottom"></div>
+      <div class="section-content content--contact">
+        <p class="eyebrow">Get In Touch</p>
+        <h2 class="section-heading">Let's build<br><em>something.</em></h2>
+        <a href="mailto:tommyr1433@gmail.com" class="contact-link">tommyr1433@gmail.com</a>
+        <nav class="social-links" aria-label="Social links">
+          <a href="https://github.com/TommyR14" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </nav>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Section navigation -->
+  <nav class="dot-nav" aria-label="Jump to section">
+    <button class="dot active" aria-label="Hero" data-index="0"></button>
+    <button class="dot" aria-label="About" data-index="1"></button>
+    <button class="dot" aria-label="Work" data-index="2"></button>
+    <button class="dot" aria-label="Contact" data-index="3"></button>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+</html>
