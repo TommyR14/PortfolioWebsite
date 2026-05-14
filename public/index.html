@@ -10,33 +10,65 @@
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <span class="nav-logo" id="nav-logo">Port<span>folio</span></span>
-  <ul class="nav-links">
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#certifications">Certs</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="/login.html" class="nav-admin-btn" id="admin-link">Admin</a></li>
-  </ul>
+<!-- SCROLL LANDING — fullscreen snap sections -->
+<main class="snap-container">
+
+  <!-- Section 1: Hero -->
+  <section class="snap-section snap-hero" style="--snap-bg: url('https://picsum.photos/seed/tommy1/1920/1080')">
+    <div class="snap-scrim snap-scrim--bottom"></div>
+    <div class="snap-content">
+      <div id="hero-avatar-wrap"></div>
+      <h1 class="hero-name" id="hero-name">Loading...</h1>
+      <p class="hero-title" id="hero-title"></p>
+      <p class="hero-bio" id="hero-bio"></p>
+      <div class="hero-links" id="hero-links"></div>
+    </div>
+    <div class="snap-scroll-hint" aria-hidden="true">
+      <div class="snap-scroll-hint__line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- Section 2: About -->
+  <section class="snap-section snap-about" style="--snap-bg: url('https://picsum.photos/seed/tommy2/1920/1080')">
+    <div class="snap-scrim snap-scrim--left"></div>
+    <div class="snap-content">
+      <p class="snap-eyebrow">About</p>
+      <h2 class="snap-heading">Building things<br><em>that matter.</em></h2>
+      <p class="snap-body">Robotics Engineer with a passion for hardware and software — from embedded systems to web applications. I thrive where elegant interfaces make complex systems feel simple.</p>
+    </div>
+  </section>
+
+  <!-- Section 3: Work -->
+  <section class="snap-section snap-work" style="--snap-bg: url('https://picsum.photos/seed/tommy3/1920/1080')">
+    <div class="snap-scrim snap-scrim--bottom"></div>
+    <div class="snap-content">
+      <p class="snap-eyebrow">Selected Work</p>
+      <h2 class="snap-heading">Projects</h2>
+      <div id="snap-projects-list" class="snap-project-list"></div>
+    </div>
+  </section>
+
+  <!-- Section 4: Contact -->
+  <section class="snap-section snap-contact" style="--snap-bg: url('https://picsum.photos/seed/tommy4/1920/1080')">
+    <div class="snap-scrim snap-scrim--bottom"></div>
+    <div class="snap-content">
+      <p class="snap-eyebrow">Get In Touch</p>
+      <h2 class="snap-heading">Let's build<br><em>something.</em></h2>
+      <div id="hero-links-contact" class="hero-links"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- DOT NAV -->
+<nav class="snap-dot-nav" aria-label="Jump to section">
+  <button class="snap-dot active" data-index="0" aria-label="Hero"></button>
+  <button class="snap-dot" data-index="1" aria-label="About"></button>
+  <button class="snap-dot" data-index="2" aria-label="Work"></button>
+  <button class="snap-dot" data-index="3" aria-label="Contact"></button>
 </nav>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-inner">
-    <div id="hero-avatar-wrap"></div>
-    <h1 class="hero-name" id="hero-name">Loading...</h1>
-    <p class="hero-title" id="hero-title"></p>
-    <p class="hero-bio" id="hero-bio"></p>
-    <div class="hero-links" id="hero-links"></div>
-  </div>
-</section>
-
-<!-- PARALLAX SHOWCASE — populated by JS from featured project images -->
-<div id="parallax-showcase"></div>
 
 <!-- SKILLS -->
 <section id="skills">

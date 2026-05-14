@@ -11,6 +11,9 @@ async function loadPortfolio() {
   renderExperience(data.experience || []);
   renderProjects(data.projects || []);
   renderContact(data.profile || {});
+  renderSnapProjects(data.projects || []);
+  renderSnapContact(data.profile || {});
+  initSnapNav();
   checkAuth();
   addRevealAttributes();
 }
@@ -430,3 +433,58 @@ loadPortfolio().then(() => {
   initParallax();
   initMagneticButtons();
 });
+
+// ===== SNAP LANDING =====
+function renderSnapProjects(projects) {
+  const list = document.getElementById('snap-projects-list');
+  if (!list) return;
+  const featured = projects.filter(p => p.featured).slice(0, 4);
+  if (!featured.length) { list.closest('.snap-section').style.display = 'none'; return; }
+  list.innerHTML = featured.map((p, i) => `
+    <div class="snap-project-item">
+      <span class="snap-project-num">${String(i+1).padStart(2,'0')}</span>
+      <div>
+        <div class="snap-project-title">${esc(p.title)}</div>
+        <div class="snap-project-meta">${esc((p.tools||[]).slice(0,3).join(' · '))}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderSnapContact(profile) {
+  const wrap = document.getElementById('hero-links-contact');
+  if (!wrap) return;
+  let html = '';
+  if (profile.email) html += `<a href="mailto:${profile.email}" class="btn btn-primary">✉ Contact Me</a>`;
+  if (profile.linkedin) html += `<a href="${profile.linkedin}" target="_blank" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);">in LinkedIn</a>`;
+  if (profile.github) html += `<a href="${profile.github}" target="_blank" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);">⌥ GitHub</a>`;
+  wrap.innerHTML = html;
+}
+
+function initSnapNav() {
+  const container = document.querySelector('.snap-container');
+  const dots = document.querySelectorAll('.snap-dot');
+  const sections = document.querySelectorAll('.snap-section');
+  if (!container || !dots.length) return;
+
+  document.body.classList.add('has-snap');
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const i = parseInt(dot.dataset.index);
+      sections[i].scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const i = [...sections].indexOf(entry.target);
+        dots.forEach(d => d.classList.remove('active'));
+        if (dots[i]) dots[i].classList.add('active');
+      }
+    });
+  }, { root: container, threshold: 0.5 });
+
+  sections.forEach(s => obs.observe(s));
+}
