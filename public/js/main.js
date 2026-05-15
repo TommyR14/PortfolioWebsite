@@ -26,6 +26,7 @@ async function loadPortfolio() {
   }
   checkAuth();
   addRevealAttributes();
+  if (document.querySelector('.snap-nav-card[data-preview]')) initHoverPreviews(data);
   return data;
 }
 
@@ -439,12 +440,11 @@ function initMagneticButtons() {
   });
 }
 
-loadPortfolio().then((data) => {
+loadPortfolio().then(() => {
   initScrollReveal();
   initNav();
   initParallax();
   initMagneticButtons();
-  if (document.querySelector('.snap-nav-card[data-preview]')) initHoverPreviews(data);
 });
 
 // ===== SNAP LANDING =====
