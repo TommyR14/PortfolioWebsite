@@ -70,29 +70,30 @@ function renderHero(p) {
   }
 
   const avatarWrap = document.getElementById('hero-avatar-wrap');
-  if (p.avatar) {
-    avatarWrap.innerHTML = `<img class="hero-avatar" src="${p.avatar}" alt="${p.name}" />`;
-  } else {
-    avatarWrap.innerHTML = `<div class="hero-avatar-placeholder">👤</div>`;
+  if (avatarWrap) {
+    if (p.avatar) {
+      avatarWrap.innerHTML = `<img class="hero-avatar" src="${p.avatar}" alt="${p.name}" />`;
+    } else {
+      avatarWrap.innerHTML = `<div class="hero-avatar-placeholder">👤</div>`;
+    }
   }
 
-  document.getElementById('hero-name').textContent = p.name || 'Your Name';
-  document.getElementById('hero-title').textContent = p.title || '';
-  document.getElementById('hero-bio').textContent = p.bio || '';
+  const heroName = document.getElementById('hero-name');
+  if (heroName) heroName.textContent = p.name || 'Your Name';
+  const heroTitle = document.getElementById('hero-title');
+  if (heroTitle) heroTitle.textContent = p.title || '';
+  const heroBio = document.getElementById('hero-bio');
+  if (heroBio) heroBio.textContent = p.bio || '';
 
   const links = document.getElementById('hero-links');
-  links.innerHTML = '';
-  if (p.email) {
-    links.innerHTML += `<a href="mailto:${p.email}" class="btn btn-primary">✉ Contact Me</a>`;
+  if (links) {
+    links.innerHTML = '';
+    if (p.email) links.innerHTML += `<a href="mailto:${p.email}" class="btn btn-primary">✉ Contact Me</a>`;
+    if (p.linkedin) links.innerHTML += `<a href="${p.linkedin}" target="_blank" class="btn btn-outline">in LinkedIn</a>`;
+    if (p.github) links.innerHTML += `<a href="${p.github}" target="_blank" class="btn btn-outline">⌥ GitHub</a>`;
   }
-  if (p.linkedin) {
-    links.innerHTML += `<a href="${p.linkedin}" target="_blank" class="btn btn-outline">in LinkedIn</a>`;
-  }
-  if (p.github) {
-    links.innerHTML += `<a href="${p.github}" target="_blank" class="btn btn-outline">⌥ GitHub</a>`;
-  }
-  document.getElementById('footer-text').textContent =
-    `© ${new Date().getFullYear()} ${p.name || 'Portfolio'}. All rights reserved.`;
+  const footer = document.getElementById('footer-text');
+  if (footer) footer.textContent = `© ${new Date().getFullYear()} ${p.name || 'Portfolio'}. All rights reserved.`;
 }
 
 function renderSkills(skills) {
