@@ -64,7 +64,7 @@ function renderShowcase(projects) {
 function renderHero(p) {
   document.title = p.name ? `${p.name} — Portfolio` : 'Portfolio';
   const nl = document.getElementById('nav-logo');
-  if (p.name) {
+  if (p.name && nl) {
     const parts = p.name.split(' ');
     nl.innerHTML = `${parts[0]}<span>${parts.slice(1).join(' ') || ''}</span>`;
   }
