@@ -501,42 +501,76 @@ function initSnapNav() {
   sections.forEach(s => obs.observe(s));
 }
 
+
+
 // ===== HOVER PREVIEWS =====
 function initHoverPreviews(data) {
+  // Create one shared tooltip div at body level
+  const tip = document.createElement('div');
+  tip.id = 'hover-tip';
+  tip.style.cssText = [
+    'position:fixed',
+    'z-index:99999',
+    'background:rgba(13,17,23,0.97)',
+    'border:1px solid #30363d',
+    'border-radius:10px',
+    'padding:0.9rem 1.1rem',
+    'min-width:220px',
+    'max-width:280px',
+    'box-shadow:0 8px 32px rgba(0,0,0,0.6)',
+    'pointer-events:none',
+    'display:none',
+    'font-family:Inter,sans-serif',
+  ].join(';');
+  document.body.appendChild(tip);
+
+  const previews = {
+    projects: () => '<div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#f0a500;margin-bottom:0.5rem">Projects</div>' +
+      (data.projects || []).slice(0,4).map(p =>
+        `<div style="padding:0.3rem 0;border-bottom:1px solid #30363d"><b style="display:block;font-size:0.82rem;color:#e6edf3">${esc(p.title)}</b><span style="font-size:0.72rem;color:#8b949e">${esc(p.category)}</span></div>`
+      ).join(''),
+
+    experience: () => '<div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#f0a500;margin-bottom:0.5rem">Experience</div>' +
+      (data.experience || []).map(e =>
+        `<div style="padding:0.3rem 0;border-bottom:1px solid #30363d"><b style="display:block;font-size:0.82rem;color:#e6edf3">${esc(e.role)}</b><span style="font-size:0.72rem;color:#8b949e">${esc(e.company)}</span></div>`
+      ).join('') +
+      '<div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#f0a500;margin:0.6rem 0 0.5rem">Education</div>' +
+      (data.education || []).map(e =>
+        `<div style="padding:0.3rem 0"><b style="display:block;font-size:0.82rem;color:#e6edf3">${esc(e.degree)} in ${esc(e.major)}</b><span style="font-size:0.72rem;color:#8b949e">${esc(e.school)}</span></div>`
+      ).join(''),
+
+    skills: () => '<div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#f0a500;margin-bottom:0.5rem">Certifications</div>' +
+      (data.certifications || []).map(c =>
+        `<div style="padding:0.3rem 0;border-bottom:1px solid #30363d"><b style="display:block;font-size:0.82rem;color:#e6edf3">${esc(c.name)}</b><span style="font-size:0.72rem;color:#8b949e">${esc(c.issuer)}</span></div>`
+      ).join('') +
+      '<div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#f0a500;margin:0.6rem 0 0.5rem">Skills</div>' +
+      (data.skills || []).slice(0,4).map(s =>
+        `<div style="padding:0.3rem 0;border-bottom:1px solid #30363d"><b style="display:block;font-size:0.82rem;color:#e6edf3">${esc(s.category)}</b><span style="font-size:0.72rem;color:#8b949e">${(s.items||[]).slice(0,3).join(', ')}</span></div>`
+      ).join('')
+  };
+
   document.querySelectorAll('.snap-nav-card[data-preview]').forEach(card => {
     const key = card.dataset.preview;
-    let html = '';
+    if (!previews[key]) return;
 
-    if (key === 'projects') {
-      html = '<div class="tip-title">Projects</div>' +
-        (data.projects || []).slice(0, 4).map(p =>
-          `<div class="tip-item"><b>${esc(p.title)}</b><span>${esc(p.category)}</span></div>`
-        ).join('');
-    } else if (key === 'experience') {
-      html = '<div class="tip-title">Experience</div>' +
-        (data.experience || []).map(e =>
-          `<div class="tip-item"><b>${esc(e.role)}</b><span>${esc(e.company)}</span></div>`
-        ).join('') +
-        '<div class="tip-title" style="margin-top:0.6rem">Education</div>' +
-        (data.education || []).map(e =>
-          `<div class="tip-item"><b>${esc(e.degree)} in ${esc(e.major)}</b><span>${esc(e.school)}</span></div>`
-        ).join('');
-    } else if (key === 'skills') {
-      html = '<div class="tip-title">Certifications</div>' +
-        (data.certifications || []).map(c =>
-          `<div class="tip-item"><b>${esc(c.name)}</b><span>${esc(c.issuer)}</span></div>`
-        ).join('') +
-        '<div class="tip-title" style="margin-top:0.6rem">Skills</div>' +
-        (data.skills || []).slice(0, 4).map(s =>
-          `<div class="tip-item"><b>${esc(s.category)}</b><span>${(s.items||[]).slice(0,3).join(', ')}</span></div>`
-        ).join('');
-    }
+    card.addEventListener('mouseenter', () => {
+      tip.innerHTML = previews[key]();
+      tip.style.display = 'block';
+      const rect = card.getBoundingClientRect();
+      // Position above the card, centered
+      const tipW = tip.offsetWidth;
+      const tipH = tip.offsetHeight;
+      let left = rect.left + (rect.width / 2) - (tipW / 2);
+      let top = rect.top - tipH - 12;
+      // Clamp to viewport
+      left = Math.max(8, Math.min(left, window.innerWidth - tipW - 8));
+      top = Math.max(8, top);
+      tip.style.left = left + 'px';
+      tip.style.top = top + 'px';
+    });
 
-    if (!html) return;
-
-    const tip = document.createElement('div');
-    tip.className = 'nav-tooltip';
-    tip.innerHTML = html;
-    card.appendChild(tip);
+    card.addEventListener('mouseleave', () => {
+      tip.style.display = 'none';
+    });
   });
 }
